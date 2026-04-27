@@ -5,28 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cameron & Michelle — Slovenia 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>
+  // Set theme before paint to avoid flash of dark/light
+  (function () {
+    try {
+      var saved = localStorage.getItem('theme');
+      if (saved !== 'light' && saved !== 'dark') {
+        saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      }
+      document.documentElement.setAttribute('data-theme', saved);
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
 <style>
-  :root {
-    --bg:      #1d1d1f;
-    --surface: #2c2c2e;
-    --raised:  #3a3a3c;
-    --border:  rgba(255,255,255,0.09);
-    --text:    #f5f5f7;
-    --muted:   #98989d;
-    --subtle:  #636366;
-    --blue:    #0a84ff;
-    --green:   #30d158;
-    --gold:    #f5a623;
-    --pink:    #ff6b9d;
-    --font:    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-    --mono:    'Space Mono', "SF Mono", monospace;
+  :root, [data-theme="dark"] {
+    --bg:        #1d1d1f;
+    --surface:   #2c2c2e;
+    --raised:    #3a3a3c;
+    --border:    rgba(255,255,255,0.09);
+    --text:      #f5f5f7;
+    --muted:     #98989d;
+    --subtle:    #636366;
+    --blue:      #0a84ff;
+    --green:     #30d158;
+    --gold:      #f5a623;
+    --pink:      #ff6b9d;
+    --hero-bg:   #111113;
+    --nav-bg:    rgba(28,28,30,0.92);
+    --footer-bg: #111113;
+    --hero-glow-1: rgba(10,132,255,0.11);
+    --hero-glow-2: rgba(245,166,35,0.07);
+    --font:      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    --mono:      'Space Mono', "SF Mono", monospace;
+  }
+  [data-theme="light"] {
+    --bg:        #f5f5f7;
+    --surface:   #ffffff;
+    --raised:    #f0f0f3;
+    --border:    rgba(0,0,0,0.09);
+    --text:      #1d1d1f;
+    --muted:     #515154;
+    --subtle:    #86868b;
+    --blue:      #0066cc;
+    --green:     #1c9a3e;
+    --gold:      #b67513;
+    --pink:      #c43d6e;
+    --hero-bg:   #fafafc;
+    --nav-bg:    rgba(255,255,255,0.85);
+    --footer-bg: #f0f0f3;
+    --hero-glow-1: rgba(0,102,204,0.06);
+    --hero-glow-2: rgba(182,117,19,0.05);
   }
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; line-height:1.6; }
+  html { background:var(--bg); }
+  body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; line-height:1.6; transition:background .25s ease, color .25s ease; }
 
   /* HERO */
-  .hero { background:#111113; padding:80px 60px 64px; position:relative; overflow:hidden; border-bottom:1px solid var(--border); }
-  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 15% 65%, rgba(10,132,255,0.11) 0%, transparent 55%), radial-gradient(ellipse at 85% 20%, rgba(245,166,35,0.07) 0%, transparent 50%); }
+  .hero { background:var(--hero-bg); padding:80px 60px 64px; position:relative; overflow:hidden; border-bottom:1px solid var(--border); transition:background .25s ease; }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 15% 65%, var(--hero-glow-1) 0%, transparent 55%), radial-gradient(ellipse at 85% 20%, var(--hero-glow-2) 0%, transparent 50%); }
   .hero-inner { position:relative; max-width:920px; margin:0 auto; }
   .hero-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
   .hero h1 { font-size:clamp(46px,8vw,90px); font-weight:700; letter-spacing:-0.04em; line-height:1.02; }
@@ -41,11 +79,14 @@
   .route-arr { margin:0 6px; color:var(--gold); }
 
   /* NAV */
-  nav { position:sticky; top:0; z-index:100; background:rgba(28,28,30,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:0 40px; overflow-x:auto; scrollbar-width:none; }
+  nav { position:sticky; top:0; z-index:100; background:var(--nav-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:0 40px; overflow-x:auto; scrollbar-width:none; transition:background .25s ease; }
   nav::-webkit-scrollbar { display:none; }
-  .nav-inner { display:flex; max-width:920px; margin:0 auto; }
+  .nav-inner { display:flex; align-items:center; max-width:920px; margin:0 auto; }
   .nav-item { font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--subtle); padding:13px 16px; text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s; }
   .nav-item:hover, .nav-item.active { color:var(--gold); border-bottom-color:var(--gold); }
+  .theme-toggle { margin-left:auto; background:none; border:none; color:var(--subtle); font-size:14px; line-height:1; cursor:pointer; padding:11px 14px; border-radius:8px; transition:color .2s, background .2s, transform .2s; }
+  .theme-toggle:hover { color:var(--gold); background:var(--raised); }
+  .theme-toggle:active { transform:scale(0.92); }
 
   /* MAIN */
   .main { max-width:920px; margin:0 auto; padding:64px 40px; }
@@ -194,8 +235,19 @@
   .sp-gold  { background:rgba(245,166,35,.15); color:var(--gold); }
 
   /* FOOTER */
-  footer { background:#111113; border-top:1px solid var(--border); color:var(--subtle); text-align:center; padding:40px; font-family:var(--mono); font-size:10px; letter-spacing:2px; }
+  footer { background:var(--footer-bg); border-top:1px solid var(--border); color:var(--subtle); text-align:center; padding:40px; font-family:var(--mono); font-size:10px; letter-spacing:2px; transition:background .25s ease; }
   footer span { color:var(--gold); }
+
+  /* LIGHT-MODE SHADOWS — soften the heavy dark-mode drop shadows */
+  [data-theme="light"] .glance,
+  [data-theme="light"] .fcard,
+  [data-theme="light"] .rcard,
+  [data-theme="light"] .htable,
+  [data-theme="light"] .dcard,
+  [data-theme="light"] .wcard,
+  [data-theme="light"] .bcard,
+  [data-theme="light"] .tcard { box-shadow:0 1px 3px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.06); }
+  [data-theme="light"] .dcard:hover { box-shadow:0 4px 24px rgba(0,0,0,.1); border-color:rgba(0,0,0,.14); }
 
   /* MISC */
   .mono-label { font-family:var(--mono); font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
@@ -235,6 +287,7 @@
     <a href="#itinerary" class="nav-item">Itinerary</a>
     <a href="#bookings"  class="nav-item">To Book</a>
     <a href="#tips"      class="nav-item">Tips</a>
+    <button id="theme-toggle" class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle theme">☀</button>
   </div>
 </nav>
 
@@ -361,6 +414,7 @@
       <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Triglav National Park — Vintgar Gorge</div><div class="wday">Tuesday Jun 30</div></div></div>
       <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Ljubljana — castle, food, market</div><div class="wday">Thu Jul 2 &amp; Fri Jul 3</div></div></div>
       <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Predjama Castle</div><div class="wday">Saturday Jul 4</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">📸 Photography — sunset shoot in Old Town Ljubljana</div><div class="wday">Friday Jul 3 · ~8:30 PM</div></div></div>
     </div>
   </section>
 
@@ -851,6 +905,27 @@
 </footer>
 
 <script>
+  // Theme toggle — respects system preference, persists choice in localStorage
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = t === 'light' ? '☾' : '☀';
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = cur === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  }
+  (function initTheme() {
+    let saved = null;
+    try { saved = localStorage.getItem('theme'); } catch (e) {}
+    if (saved !== 'light' && saved !== 'dark') {
+      saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    applyTheme(saved);
+  })();
+
   function toggle(header) {
     const body = header.nextElementSibling;
     const chev = header.querySelector('.chev');
