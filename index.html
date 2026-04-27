@@ -6,13 +6,11 @@
 <title>Michelle & Cameron — Slovenia 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>
-  // Set theme before paint to avoid flash of dark/light
+  // Set theme before paint to avoid flash of dark/light. Default = dark.
   (function () {
     try {
       var saved = localStorage.getItem('theme');
-      if (saved !== 'light' && saved !== 'dark') {
-        saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-      }
+      if (saved !== 'light' && saved !== 'dark') saved = 'dark';
       document.documentElement.setAttribute('data-theme', saved);
     } catch (e) {
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -283,10 +281,10 @@
 <nav>
   <div class="nav-inner">
     <a href="#glance"    class="nav-item">At a Glance</a>
+    <a href="#itinerary" class="nav-item">Itinerary</a>
     <a href="#flights"   class="nav-item">Flights</a>
     <a href="#hotels"    class="nav-item">Hotels</a>
     <a href="#wishlist"  class="nav-item">Wishlist</a>
-    <a href="#itinerary" class="nav-item">Itinerary</a>
     <a href="#bookings"  class="nav-item">To Book</a>
     <a href="#tips"      class="nav-item">Tips</a>
     <button id="theme-toggle" class="theme-toggle" type="button" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle theme">☀</button>
@@ -304,119 +302,6 @@
       <div class="glance-row"><span class="glance-lbl">Night 1</span><span class="glance-val">Milka Hotel — Kranjska Gora<span class="conf">✔ Booked</span></span></div>
       <div class="glance-row"><span class="glance-lbl">Nights 2–4</span><span class="glance-val">Adora Luxury Hotel — Lake Bled<span class="conf">✔ Booked</span></span></div>
       <div class="glance-row"><span class="glance-lbl">Nights 5–7</span><span class="glance-val">InterContinental — Ljubljana<span class="conf">✔ Booked</span></span></div>
-      <div class="glance-row"><span class="glance-lbl">Confirmed dining</span><span class="glance-val">JAZ Restaurant — Sat 4 Jul, 6:00 PM<span class="conf">✔ Booked</span></span></div>
-      <div class="glance-row"><span class="glance-lbl">Car hire</span><span class="glance-val">AVIS — Collect &amp; return Venice Marco Polo<span class="conf">✔ Booked</span></span></div>
-      <div class="glance-row"><span class="glance-lbl">Photo shoot</span><span class="glance-val" style="color:var(--pink)">Flytographer with Mankica — Old Town · Fri 3 Jul, ~6:30 PM<span class="conf">✔ Booked</span></span></div>
-    </div>
-  </section>
-
-  <!-- FLIGHTS -->
-  <section id="flights" class="section">
-    <div class="sh"><h2>Flights</h2><div class="sh-line"></div></div>
-    <div class="flights-grid">
-      <!-- Michelle -->
-      <div class="fcard">
-        <div class="fperson">🌸 Michelle <span class="fconf">O91R58</span></div>
-        <div class="fleg">
-          <span class="fiata">SFO</span>
-          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">AC 567 · Sat Jun 27</span></div>
-          <div class="ftime">12:15 PM<strong>YVR 2:39</strong></div>
-        </div>
-        <div style="padding:4px 0"><span class="layover">1hr 36min · Vancouver</span></div>
-        <div class="fleg">
-          <span class="fiata">YVR</span>
-          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">LH 493 · overnight</span></div>
-          <div class="ftime">4:15 PM<strong>FRA 11:00</strong></div>
-        </div>
-        <div style="padding:4px 0"><span class="layover">1hr 40min · Frankfurt</span></div>
-        <div class="fleg">
-          <span class="fiata">FRA</span>
-          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">LH 326 · Sun Jun 28</span></div>
-          <div class="ftime">12:40 PM<strong>VCE 14:00</strong></div>
-        </div>
-      </div>
-      <!-- Cameron -->
-      <div class="fcard">
-        <div class="fperson">🏏 Cameron <span class="fconf">8VQFWL</span></div>
-        <div class="fleg">
-          <span class="fiata">BUD</span>
-          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">OS 632 · Sun Jun 28 · T2A</span></div>
-          <div class="ftime">11:15 AM<strong>VIE 12:00</strong></div>
-        </div>
-        <div style="padding:4px 0"><span class="layover">50min · Vienna T3</span></div>
-        <div class="fleg">
-          <span class="fiata">VIE</span>
-          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">OS 543 · Sun Jun 28 · T3</span></div>
-          <div class="ftime">12:50 PM<strong>VCE 13:55</strong></div>
-        </div>
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
-          <div class="dlabel" style="margin-bottom:8px">After landing</div>
-          <div class="iblock">
-            <div class="irow"><span class="il">AVIS pickup</span><span class="iv">3:00 PM · Marco Polo</span></div>
-            <div class="irow"><span class="il">Drive to Milka Hotel</span><span class="iv">~2.5 hrs via Karavanke Tunnel</span></div>
-            <div class="irow"><span class="il">Check in</span><span class="iv">~8:00 PM (call ahead)</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Return -->
-    <div class="rcard">
-      <div class="rhead">
-        <div>
-          <div class="fperson" style="margin-bottom:3px">🏠 Return — Together · Sun 5 Jul</div>
-          <span style="font-size:13px;color:var(--muted)">Conf O91R58 · Leave Ljubljana by 9:00 AM · Drop AVIS Marco Polo by 12:30 PM</span>
-        </div>
-        <span class="spill sp-green">Confirmed</span>
-      </div>
-      <div class="rsegs">
-        <div class="rseg"><div class="mono-label">Depart</div><div class="riata">VCE</div><div class="rdetail">LH 327 · 2:40 PM</div></div>
-        <div class="rseg"><div class="mono-label">Frankfurt · 1hr 20min</div><div class="riata">FRA</div><div class="rdetail">Arrive 4:10 PM<br>UA 927 departs 5:30 PM</div></div>
-        <div class="rseg"><div class="mono-label">Home</div><div class="riata">SFO</div><div class="rdetail">7:50 PM PDT</div></div>
-      </div>
-      <div class="rnote">⏰ Leave Ljubljana by <strong>9:00 AM</strong> · Allow extra time for the Karavanke Tunnel on Sundays · Aim at Marco Polo <strong>2.5 hrs before departure</strong></div>
-    </div>
-  </section>
-
-  <!-- HOTELS -->
-  <section id="hotels" class="section">
-    <div class="sh"><h2>Hotels</h2><div class="sh-line"></div></div>
-    <table class="htable">
-      <thead><tr><th>Hotel</th><th>Location</th><th>Dates</th><th>Nights</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><div class="hname">Boutique Hotel Milka</div><div class="haddr">Kolodvorska ulica 15, 4280 Kranjska Gora</div><div class="hnote">Call ahead if arriving after 9 PM · Ask for the lake room</div></td>
-          <td>Kranjska Gora</td>
-          <td style="font-family:var(--mono);font-size:11px">Jun 28</td>
-          <td class="hnights">1</td>
-          <td><span class="spill sp-green">Booked</span></td>
-        </tr>
-        <tr>
-          <td><div class="hname">Adora Luxury Hotel</div><div class="haddr">Kidričeva cesta 17, 4260 Bled</div><div class="hnote">Adults-only · direct lake views · confirm breakfast &amp; spa bookings in advance</div></td>
-          <td>Lake Bled</td>
-          <td style="font-family:var(--mono);font-size:11px">Jun 29 – Jul 2</td>
-          <td class="hnights">3</td>
-          <td><span class="spill sp-green">Booked</span></td>
-        </tr>
-        <tr>
-          <td><div class="hname">InterContinental Ljubljana</div><div class="haddr">Slovenska cesta 59, 1000 Ljubljana</div><div class="hnote">IHG One Rewards — confirm points posting · 10 min walk to Old Town</div></td>
-          <td>Ljubljana</td>
-          <td style="font-family:var(--mono);font-size:11px">Jul 2 – Jul 5</td>
-          <td class="hnights">3</td>
-          <td><span class="spill sp-green">Booked</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- WISHLIST -->
-  <section id="wishlist" class="section">
-    <div class="sh"><h2>Michelle's Wishlist</h2><div class="sh-line"></div></div>
-    <div class="wgrid">
-      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Lake Bled — swim, row, Mala Osojnica hike</div><div class="wday">Monday Jun 29</div></div></div>
-      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Triglav National Park — Vintgar Gorge</div><div class="wday">Tuesday Jun 30</div></div></div>
-      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Ljubljana — castle, food, market</div><div class="wday">Thu Jul 2 &amp; Fri Jul 3</div></div></div>
-      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Predjama Castle</div><div class="wday">Saturday Jul 4</div></div></div>
-      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">📸 Photography — Old Town Ljubljana shoot</div><div class="wday">Friday Jul 3 · ~6:30 PM</div></div></div>
     </div>
   </section>
 
@@ -772,6 +657,116 @@
 
   </section>
 
+  <!-- FLIGHTS -->
+  <section id="flights" class="section">
+    <div class="sh"><h2>Flights</h2><div class="sh-line"></div></div>
+    <div class="flights-grid">
+      <!-- Michelle -->
+      <div class="fcard">
+        <div class="fperson">🌸 Michelle <span class="fconf">O91R58</span></div>
+        <div class="fleg">
+          <span class="fiata">SFO</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">AC 567 · Sat Jun 27</span></div>
+          <div class="ftime">12:15 PM<strong>YVR 2:39</strong></div>
+        </div>
+        <div style="padding:4px 0"><span class="layover">1hr 36min · Vancouver</span></div>
+        <div class="fleg">
+          <span class="fiata">YVR</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">LH 493 · overnight</span></div>
+          <div class="ftime">4:15 PM<strong>FRA 11:00</strong></div>
+        </div>
+        <div style="padding:4px 0"><span class="layover">1hr 40min · Frankfurt</span></div>
+        <div class="fleg">
+          <span class="fiata">FRA</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">LH 326 · Sun Jun 28</span></div>
+          <div class="ftime">12:40 PM<strong>VCE 14:00</strong></div>
+        </div>
+      </div>
+      <!-- Cameron -->
+      <div class="fcard">
+        <div class="fperson">🏏 Cameron <span class="fconf">8VQFWL</span></div>
+        <div class="fleg">
+          <span class="fiata">BUD</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">OS 632 · Sun Jun 28 · T2A</span></div>
+          <div class="ftime">11:15 AM<strong>VIE 12:00</strong></div>
+        </div>
+        <div style="padding:4px 0"><span class="layover">50min · Vienna T3</span></div>
+        <div class="fleg">
+          <span class="fiata">VIE</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">OS 543 · Sun Jun 28 · T3</span></div>
+          <div class="ftime">12:50 PM<strong>VCE 13:55</strong></div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div class="dlabel" style="margin-bottom:8px">After landing</div>
+          <div class="iblock">
+            <div class="irow"><span class="il">AVIS pickup</span><span class="iv">3:00 PM · Marco Polo</span></div>
+            <div class="irow"><span class="il">Drive to Milka Hotel</span><span class="iv">~2.5 hrs via Karavanke Tunnel</span></div>
+            <div class="irow"><span class="il">Check in</span><span class="iv">~8:00 PM (call ahead)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Return -->
+    <div class="rcard">
+      <div class="rhead">
+        <div>
+          <div class="fperson" style="margin-bottom:3px">🏠 Return — Together · Sun 5 Jul</div>
+          <span style="font-size:13px;color:var(--muted)">Conf O91R58 · Leave Ljubljana by 9:00 AM · Drop AVIS Marco Polo by 12:30 PM</span>
+        </div>
+        <span class="spill sp-green">Confirmed</span>
+      </div>
+      <div class="rsegs">
+        <div class="rseg"><div class="mono-label">Depart</div><div class="riata">VCE</div><div class="rdetail">LH 327 · 2:40 PM</div></div>
+        <div class="rseg"><div class="mono-label">Frankfurt · 1hr 20min</div><div class="riata">FRA</div><div class="rdetail">Arrive 4:10 PM<br>UA 927 departs 5:30 PM</div></div>
+        <div class="rseg"><div class="mono-label">Home</div><div class="riata">SFO</div><div class="rdetail">7:50 PM PDT</div></div>
+      </div>
+      <div class="rnote">⏰ Leave Ljubljana by <strong>9:00 AM</strong> · Allow extra time for the Karavanke Tunnel on Sundays · Aim at Marco Polo <strong>2.5 hrs before departure</strong></div>
+    </div>
+  </section>
+
+  <!-- HOTELS -->
+  <section id="hotels" class="section">
+    <div class="sh"><h2>Hotels</h2><div class="sh-line"></div></div>
+    <table class="htable">
+      <thead><tr><th>Hotel</th><th>Location</th><th>Dates</th><th>Nights</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="hname">Boutique Hotel Milka</div><div class="haddr">Kolodvorska ulica 15, 4280 Kranjska Gora</div><div class="hnote">Call ahead if arriving after 9 PM · Ask for the lake room</div></td>
+          <td>Kranjska Gora</td>
+          <td style="font-family:var(--mono);font-size:11px">Jun 28</td>
+          <td class="hnights">1</td>
+          <td><span class="spill sp-green">Booked</span></td>
+        </tr>
+        <tr>
+          <td><div class="hname">Adora Luxury Hotel</div><div class="haddr">Kidričeva cesta 17, 4260 Bled</div><div class="hnote">Adults-only · direct lake views · confirm breakfast &amp; spa bookings in advance</div></td>
+          <td>Lake Bled</td>
+          <td style="font-family:var(--mono);font-size:11px">Jun 29 – Jul 2</td>
+          <td class="hnights">3</td>
+          <td><span class="spill sp-green">Booked</span></td>
+        </tr>
+        <tr>
+          <td><div class="hname">InterContinental Ljubljana</div><div class="haddr">Slovenska cesta 59, 1000 Ljubljana</div><div class="hnote">IHG One Rewards — confirm points posting · 10 min walk to Old Town</div></td>
+          <td>Ljubljana</td>
+          <td style="font-family:var(--mono);font-size:11px">Jul 2 – Jul 5</td>
+          <td class="hnights">3</td>
+          <td><span class="spill sp-green">Booked</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- WISHLIST -->
+  <section id="wishlist" class="section">
+    <div class="sh"><h2>Michelle's Wishlist</h2><div class="sh-line"></div></div>
+    <div class="wgrid">
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Lake Bled — swim, row, Mala Osojnica hike</div><div class="wday">Monday Jun 29</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Triglav National Park — Vintgar Gorge</div><div class="wday">Tuesday Jun 30</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Ljubljana — castle, food, market</div><div class="wday">Thu Jul 2 &amp; Fri Jul 3</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Predjama Castle</div><div class="wday">Saturday Jul 4</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">📸 Photography — Old Town Ljubljana shoot</div><div class="wday">Friday Jul 3 · ~6:30 PM</div></div></div>
+    </div>
+  </section>
+
   <!-- BOOKINGS -->
   <section id="bookings" class="section">
     <div class="sh"><h2>To Book</h2><div class="sh-line"></div></div>
@@ -929,9 +924,7 @@
   (function initTheme() {
     let saved = null;
     try { saved = localStorage.getItem('theme'); } catch (e) {}
-    if (saved !== 'light' && saved !== 'dark') {
-      saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-    }
+    if (saved !== 'light' && saved !== 'dark') saved = 'dark';
     applyTheme(saved);
   })();
 
@@ -942,7 +935,6 @@
     body.classList.toggle('open', !open);
     chev.style.transform = open ? '' : 'rotate(90deg)';
   }
-  document.querySelector('.dhead').click();
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-item');
   window.addEventListener('scroll', () => {
