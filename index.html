@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cameron & Michelle — Slovenia 2026</title>
+<title>Michelle & Cameron — Slovenia 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>
   // Set theme before paint to avoid flash of dark/light
@@ -67,8 +67,9 @@
   .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 15% 65%, var(--hero-glow-1) 0%, transparent 55%), radial-gradient(ellipse at 85% 20%, var(--hero-glow-2) 0%, transparent 50%); }
   .hero-inner { position:relative; max-width:920px; margin:0 auto; }
   .hero-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
-  .hero h1 { font-size:clamp(46px,8vw,90px); font-weight:700; letter-spacing:-0.04em; line-height:1.02; }
+  .hero h1 { font-size:clamp(34px,7vw,72px); font-weight:700; letter-spacing:-0.04em; line-height:1.05; white-space:nowrap; }
   .hero h1 em { font-style:normal; color:var(--gold); }
+  @media(max-width:640px){ .hero { padding:64px 24px 48px; } .hero h1 { font-size:clamp(28px,8.5vw,52px); } }
   .hero-sub { font-size:19px; color:var(--muted); margin-top:14px; font-weight:300; }
   .hero-pills { margin-top:36px; display:flex; gap:32px; flex-wrap:wrap; }
   .hero-pill { display:flex; flex-direction:column; gap:3px; }
@@ -82,11 +83,12 @@
   nav { position:sticky; top:0; z-index:100; background:var(--nav-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:0 40px; overflow-x:auto; scrollbar-width:none; transition:background .25s ease; }
   nav::-webkit-scrollbar { display:none; }
   .nav-inner { display:flex; align-items:center; max-width:920px; margin:0 auto; }
-  .nav-item { font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--subtle); padding:13px 16px; text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s; }
+  .nav-item { font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); padding:16px 18px; text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s; }
   .nav-item:hover, .nav-item.active { color:var(--gold); border-bottom-color:var(--gold); }
-  .theme-toggle { margin-left:auto; background:none; border:none; color:var(--subtle); font-size:14px; line-height:1; cursor:pointer; padding:11px 14px; border-radius:8px; transition:color .2s, background .2s, transform .2s; }
+  .theme-toggle { margin-left:auto; background:none; border:none; color:var(--muted); font-size:17px; line-height:1; cursor:pointer; padding:12px 14px; border-radius:8px; transition:color .2s, background .2s, transform .2s; }
   .theme-toggle:hover { color:var(--gold); background:var(--raised); }
   .theme-toggle:active { transform:scale(0.92); }
+  @media(max-width:640px){ nav { padding:0 20px; } .nav-item { font-size:11px; padding:14px 14px; letter-spacing:1.2px; } }
 
   /* MAIN */
   .main { max-width:920px; margin:0 auto; padding:64px 40px; }
@@ -259,7 +261,7 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">28 June – 5 July 2026 &nbsp;·&nbsp; Slovenia</div>
-    <h1>Cameron &amp;<br><em>Michelle</em></h1>
+    <h1><em>Michelle</em> &amp; Cameron</h1>
     <div class="hero-sub">A week in the Julian Alps &amp; Ljubljana</div>
     <div class="hero-pills">
       <div class="hero-pill"><span class="lbl">Duration</span><span class="val">8 days · 7 nights</span></div>
@@ -907,7 +909,7 @@
 </div>
 
 <footer>
-  <div>Cameron &amp; Michelle &nbsp;·&nbsp; <span>Slovenia</span> &nbsp;·&nbsp; 28 June – 5 July 2026</div>
+  <div>Michelle &amp; Cameron &nbsp;·&nbsp; <span>Slovenia</span> &nbsp;·&nbsp; 28 June – 5 July 2026</div>
   <div style="margin-top:8px">Have a <span>wonderful</span> trip ✦</div>
 </footer>
 
