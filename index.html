@@ -7,795 +7,864 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:      #1d1d1f;
-    --bg:       #1d1d1f;
-    --surface:  #2c2c2e;
-    --raised:   #3a3a3c;
-    --border:   rgba(255,255,255,0.09);
-    --text:     #f5f5f7;
-    --muted:    #98989d;
-    --subtle:   #636366;
-    --blue:     #0a84ff;
-    --green:    #30d158;
-    --gold:     #f5a623;
-    --font:     -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-    --mono:     'Space Mono', "SF Mono", "Fira Code", monospace;
+    --bg:      #1d1d1f;
+    --surface: #2c2c2e;
+    --raised:  #3a3a3c;
+    --border:  rgba(255,255,255,0.09);
+    --text:    #f5f5f7;
+    --muted:   #98989d;
+    --subtle:  #636366;
+    --blue:    #0a84ff;
+    --green:   #30d158;
+    --gold:    #f5a623;
+    --pink:    #ff6b9d;
+    --font:    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+    --mono:    'Space Mono', "SF Mono", monospace;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:var(--font); background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; line-height:1.6; }
 
-  .hero { background: #111113; color: var(--text); padding: 80px 60px 60px; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
-  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 15% 60%, rgba(10,132,255,0.10) 0%, transparent 55%), radial-gradient(ellipse at 85% 20%, rgba(245,166,35,0.07) 0%, transparent 50%); }
-  .hero-inner { position: relative; max-width: 900px; margin: 0 auto; }
-  .hero-label { font-family: var(--mono); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
-  .hero h1 { font-size: clamp(44px, 8vw, 86px); font-weight: 700; line-height: 1.02; letter-spacing: -0.04em; margin-bottom: 8px; }
-  .hero h1 em { font-style: normal; color: var(--gold); }
-  .hero-sub { font-size: 20px; color: var(--muted); margin-top: 16px; font-weight: 300; letter-spacing: -0.01em; }
-  .hero-meta { margin-top: 40px; display: flex; gap: 40px; flex-wrap: wrap; }
-  .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
-  .hero-meta-item .label { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
-  .hero-meta-item .value { font-size: 15px; color: var(--text); font-weight: 500; letter-spacing: -0.01em; }
-  .route-line { margin-top: 36px; display: flex; align-items: center; flex-wrap: wrap; font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--subtle); gap: 2px; }
-  .route-stop { color: var(--muted); }
-  .route-arrow { margin: 0 6px; color: var(--gold); }
+  /* HERO */
+  .hero { background:#111113; padding:80px 60px 64px; position:relative; overflow:hidden; border-bottom:1px solid var(--border); }
+  .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 15% 65%, rgba(10,132,255,0.11) 0%, transparent 55%), radial-gradient(ellipse at 85% 20%, rgba(245,166,35,0.07) 0%, transparent 50%); }
+  .hero-inner { position:relative; max-width:920px; margin:0 auto; }
+  .hero-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:20px; }
+  .hero h1 { font-size:clamp(46px,8vw,90px); font-weight:700; letter-spacing:-0.04em; line-height:1.02; }
+  .hero h1 em { font-style:normal; color:var(--gold); }
+  .hero-sub { font-size:19px; color:var(--muted); margin-top:14px; font-weight:300; }
+  .hero-pills { margin-top:36px; display:flex; gap:32px; flex-wrap:wrap; }
+  .hero-pill { display:flex; flex-direction:column; gap:3px; }
+  .hero-pill .lbl { font-family:var(--mono); font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); opacity:.7; }
+  .hero-pill .val { font-size:14px; font-weight:500; color:var(--text); }
+  .route { margin-top:34px; display:flex; align-items:center; flex-wrap:wrap; gap:2px; font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--subtle); }
+  .route-stop { color:var(--muted); }
+  .route-arr { margin:0 6px; color:var(--gold); }
 
-  .sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(28,28,30,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 40px; overflow-x: auto; scrollbar-width: none; }
-  .sticky-nav::-webkit-scrollbar { display: none; }
-  .nav-inner { display: flex; max-width: 900px; margin: 0 auto; }
-  .nav-item { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--subtle); padding: 13px 16px; cursor: pointer; transition: color 0.2s; white-space: nowrap; text-decoration: none; border-bottom: 2px solid transparent; }
-  .nav-item:hover, .nav-item.active { color: var(--gold); border-bottom-color: var(--gold); }
+  /* NAV */
+  nav { position:sticky; top:0; z-index:100; background:rgba(28,28,30,0.92); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:0 40px; overflow-x:auto; scrollbar-width:none; }
+  nav::-webkit-scrollbar { display:none; }
+  .nav-inner { display:flex; max-width:920px; margin:0 auto; }
+  .nav-item { font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--subtle); padding:13px 16px; text-decoration:none; white-space:nowrap; border-bottom:2px solid transparent; transition:color .2s; }
+  .nav-item:hover, .nav-item.active { color:var(--gold); border-bottom-color:var(--gold); }
 
-  .main { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
-  .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
-  .section-title { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: var(--text); }
-  .section-line { flex: 1; height: 1px; background: var(--border); }
+  /* MAIN */
+  .main { max-width:920px; margin:0 auto; padding:64px 40px; }
+  @media(max-width:640px){ .main { padding:48px 20px; } }
 
-  .flights-section { margin-bottom: 60px; }
-  .flights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-  @media (max-width: 600px) { .flights-grid { grid-template-columns: 1fr; } }
-  .flight-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
-  .flight-person { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
-  .flight-conf { font-family: var(--mono); font-size: 10px; color: var(--subtle); background: var(--raised); border-radius: 6px; padding: 2px 8px; }
-  .flight-leg { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
-  .flight-leg:last-of-type { border-bottom: none; }
-  .flight-iata { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; min-width: 38px; color: var(--text); }
-  .flight-mid { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .flight-num { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; color: var(--subtle); }
-  .flight-line-wrap { width: 100%; display: flex; align-items: center; gap: 4px; }
-  .flight-dash { flex: 1; height: 1px; background: var(--border); }
-  .flight-plane { font-size: 10px; color: var(--gold); }
-  .flight-time { font-size: 13px; font-weight: 500; text-align: right; min-width: 70px; color: var(--muted); }
-  .flight-arrive { font-weight: 700; color: var(--text); }
-  .layover-tag { display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: 1px; color: var(--gold); background: rgba(245,166,35,0.12); border-radius: 20px; padding: 2px 10px; margin: 4px 0; }
-  .return-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px 26px; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
-  .return-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-  .return-segments { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  .return-seg { padding-right: 16px; border-right: 1px solid var(--border); }
-  .return-seg:last-child { border-right: none; padding-right: 0; }
-  .return-iata { font-size: 22px; font-weight: 700; letter-spacing: -0.03em; margin: 4px 0; color: var(--text); }
-  .return-detail { font-size: 12px; color: var(--muted); }
-  .return-note { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
-  .status-pill { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
-  .status-confirmed { background: rgba(48,209,88,0.15); color: var(--green); }
+  /* SECTION HEADER */
+  .sh { display:flex; align-items:center; gap:16px; margin-bottom:28px; }
+  .sh h2 { font-size:26px; font-weight:700; letter-spacing:-0.03em; }
+  .sh-line { flex:1; height:1px; background:var(--border); }
+  .section { margin-bottom:64px; }
 
-  .hotels-section { margin-bottom: 60px; }
-  .hotel-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
-  .hotel-table th { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); background: var(--raised); padding: 12px 18px; text-align: left; border-bottom: 1px solid var(--border); }
-  .hotel-table td { padding: 13px 18px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
-  .hotel-table tr:last-child td { border-bottom: none; }
-  .hotel-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-  .hotel-name { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; color: var(--text); }
-  .hotel-note { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .hotel-nights { font-family: var(--mono); font-size: 11px; color: var(--gold); }
+  /* GLANCE TABLE */
+  .glance { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; box-shadow:0 2px 24px rgba(0,0,0,.3); }
+  .glance-row { display:flex; align-items:flex-start; gap:16px; padding:14px 20px; border-bottom:1px solid var(--border); font-size:14px; }
+  .glance-row:last-child { border-bottom:none; }
+  .glance-lbl { font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); min-width:140px; padding-top:1px; }
+  .glance-val { color:var(--text); flex:1; }
+  .glance-val .conf { font-family:var(--mono); font-size:10px; color:var(--green); margin-left:8px; }
 
-  .wishlist-section { margin-bottom: 60px; }
-  .wishlist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 600px) { .wishlist-grid { grid-template-columns: 1fr; } }
-  .wish-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 14px; }
-  .wish-check { width: 28px; height: 28px; border-radius: 50%; background: rgba(48,209,88,0.15); color: var(--green); font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .wish-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-  .wish-day { font-family: var(--mono); font-size: 10px; color: var(--subtle); letter-spacing: 1px; margin-top: 2px; }
+  /* FLIGHTS */
+  .flights-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+  @media(max-width:600px){ .flights-grid { grid-template-columns:1fr; } }
+  .fcard { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px; box-shadow:0 2px 20px rgba(0,0,0,.3); }
+  .fperson { font-family:var(--mono); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; }
+  .fconf { font-family:var(--mono); font-size:10px; color:var(--subtle); background:var(--raised); border-radius:6px; padding:2px 8px; }
+  .fleg { display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--border); }
+  .fleg:last-of-type { border-bottom:none; }
+  .fiata { font-size:18px; font-weight:700; letter-spacing:-0.02em; min-width:38px; }
+  .fmid { flex:1; display:flex; flex-direction:column; align-items:center; gap:3px; }
+  .fnum { font-family:var(--mono); font-size:9px; letter-spacing:1px; color:var(--subtle); }
+  .fline { width:100%; display:flex; align-items:center; gap:4px; }
+  .fdash { flex:1; height:1px; background:var(--border); }
+  .fplane { font-size:10px; color:var(--gold); }
+  .ftime { font-size:13px; font-weight:500; text-align:right; min-width:70px; color:var(--muted); }
+  .ftime strong { display:block; font-weight:700; color:var(--text); }
+  .layover { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:1px; color:var(--gold); background:rgba(245,166,35,.12); border-radius:20px; padding:2px 10px; margin:4px 0; }
+  .rcard { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:22px 26px; box-shadow:0 2px 20px rgba(0,0,0,.3); }
+  .rhead { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .rsegs { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  .rseg { padding-right:16px; border-right:1px solid var(--border); }
+  .rseg:last-child { border-right:none; padding-right:0; }
+  .riata { font-size:22px; font-weight:700; letter-spacing:-0.03em; margin:4px 0; }
+  .rdetail { font-size:12px; color:var(--muted); line-height:1.5; }
+  .rnote { margin-top:14px; padding-top:14px; border-top:1px solid var(--border); font-size:13px; color:var(--muted); }
 
-  .days-section { margin-bottom: 60px; }
-  .day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.25); transition: box-shadow 0.2s, border-color 0.2s; }
-  .day-card:hover { box-shadow: 0 4px 28px rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.14); }
-  .day-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; padding: 20px 26px; cursor: pointer; user-select: none; }
-  .day-num { font-size: 44px; font-weight: 700; line-height: 1; min-width: 58px; text-align: center; color: var(--text); opacity: 0.06; letter-spacing: -0.04em; }
-  .day-date { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
-  .day-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
-  .day-subtitle { font-size: 13px; color: var(--muted); margin-top: 2px; }
-  .day-tags { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-  .tag { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
-  .tag-travel { background: rgba(245,166,35,0.15); color: var(--gold); }
-  .tag-nature { background: rgba(48,209,88,0.12); color: var(--green); }
-  .tag-culture { background: rgba(10,132,255,0.15); color: var(--blue); }
-  .tag-food { background: rgba(255,159,10,0.15); color: #ff9f0a; }
-  .tag-hotel { background: rgba(191,90,242,0.15); color: #bf5af2; }
-  .tag-special { background: rgba(245,166,35,0.18); color: var(--gold); }
-  .chevron { font-size: 16px; color: var(--subtle); transition: transform 0.3s; margin-left: 10px; }
-  .day-body { display: none; padding: 0 26px 26px; border-top: 1px solid var(--border); }
-  .day-body.open { display: block; }
-  .day-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 20px; }
-  @media (max-width: 600px) { .day-sections { grid-template-columns: 1fr; } }
-  .day-section-label { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .activity-list { list-style: none; }
-  .activity-list li { padding: 6px 0 6px 20px; position: relative; font-size: 14px; border-bottom: 1px solid var(--border); color: var(--text); line-height: 1.45; }
-  .activity-list li:last-child { border-bottom: none; }
-  .activity-list li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 11px; top: 9px; }
-  .activity-list li.food::before { content: '🍽'; font-size: 11px; top: 7px; }
-  .activity-list li.nature::before { content: '🌿'; font-size: 11px; top: 7px; }
-  .activity-list li.culture::before { content: '🏛'; font-size: 11px; top: 7px; }
-  .activity-list li.flight::before { content: '✈'; font-size: 11px; top: 7px; }
-  .activity-list li.car::before { content: '🚗'; font-size: 11px; top: 7px; }
-  .activity-list li.boat::before { content: '⛵'; font-size: 11px; top: 7px; }
-  .activity-list li.hike::before { content: '🥾'; font-size: 11px; top: 7px; }
-  .activity-list li.swim::before { content: '🏊'; font-size: 11px; top: 7px; }
-  .activity-list li.raft::before { content: '🚣'; font-size: 11px; top: 7px; }
-  .li-note { font-size: 12px; color: var(--muted); display: block; margin-top: 1px; }
-  .info-block { background: var(--raised); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
-  .info-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 5px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
-  .info-row:last-child { border-bottom: none; }
-  .info-row .lbl { color: var(--muted); }
-  .info-row .val { text-align: right; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
-  .notes-box { margin-top: 14px; background: rgba(245,166,35,0.06); border-left: 2px solid var(--gold); border-radius: 0 6px 6px 0; padding: 11px 14px; font-size: 13px; color: var(--muted); line-height: 1.5; }
-  .full-width { margin-top: 20px; }
+  /* HOTELS */
+  .htable { width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:0 2px 20px rgba(0,0,0,.3); }
+  .htable th { font-family:var(--mono); font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); background:var(--raised); padding:12px 18px; text-align:left; border-bottom:1px solid var(--border); }
+  .htable td { padding:13px 18px; border-bottom:1px solid var(--border); vertical-align:top; font-size:14px; color:var(--text); }
+  .htable tr:last-child td { border-bottom:none; }
+  .hname { font-weight:600; letter-spacing:-0.01em; }
+  .haddr { font-size:11px; color:var(--subtle); margin-top:2px; font-family:var(--mono); }
+  .hnote { font-size:12px; color:var(--muted); margin-top:3px; }
+  .hnights { font-family:var(--mono); font-size:11px; color:var(--gold); }
 
-  .bookings-section { margin-bottom: 60px; }
-  .bookings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 600px) { .bookings-grid { grid-template-columns: 1fr; } }
-  .booking-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.2); display: flex; align-items: flex-start; gap: 14px; }
-  .booking-card.done { background: rgba(48,209,88,0.06); border: 1px solid rgba(48,209,88,0.2); }
-  .booking-num { width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: white; font-family: var(--mono); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .booking-num.done { background: var(--green); }
-  .booking-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 3px; color: var(--text); }
-  .booking-detail { font-size: 12px; color: var(--muted); line-height: 1.45; }
-  .booking-link { font-size: 12px; color: var(--blue); text-decoration: none; display: inline-block; margin-top: 3px; }
-  .booking-link:hover { text-decoration: underline; }
+  /* WISHLIST */
+  .wgrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:600px){ .wgrid { grid-template-columns:1fr; } }
+  .wcard { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:15px 18px; display:flex; align-items:center; gap:14px; box-shadow:0 2px 12px rgba(0,0,0,.2); }
+  .wcheck { width:28px; height:28px; border-radius:50%; background:rgba(48,209,88,.15); color:var(--green); font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .wtitle { font-size:14px; font-weight:600; letter-spacing:-0.01em; }
+  .wday { font-family:var(--mono); font-size:10px; color:var(--subtle); margin-top:2px; }
 
-  .tips-section { margin-bottom: 60px; }
-  .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 600px) { .tips-grid { grid-template-columns: 1fr; } }
-  .tip-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
-  .tip-icon { font-size: 22px; margin-bottom: 10px; }
-  .tip-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; color: var(--text); }
-  .tip-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  /* DAY CARDS */
+  .dcard { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:14px; overflow:hidden; box-shadow:0 2px 20px rgba(0,0,0,.25); transition:box-shadow .2s, border-color .2s; }
+  .dcard:hover { box-shadow:0 4px 28px rgba(0,0,0,.4); border-color:rgba(255,255,255,.14); }
+  .dhead { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:20px; padding:20px 26px; cursor:pointer; user-select:none; }
+  .dnum { font-size:44px; font-weight:700; line-height:1; min-width:56px; text-align:center; color:var(--text); opacity:.055; letter-spacing:-0.04em; }
+  .ddate { font-family:var(--mono); font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+  .dtitle { font-size:18px; font-weight:700; letter-spacing:-0.02em; }
+  .dsub { font-size:13px; color:var(--muted); margin-top:2px; }
+  .dtags { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
+  .tag { font-family:var(--mono); font-size:9px; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:20px; white-space:nowrap; }
+  .t-travel  { background:rgba(245,166,35,.15);  color:var(--gold); }
+  .t-nature  { background:rgba(48,209,88,.12);   color:var(--green); }
+  .t-culture { background:rgba(10,132,255,.15);  color:var(--blue); }
+  .t-food    { background:rgba(255,159,10,.15);  color:#ff9f0a; }
+  .t-hotel   { background:rgba(191,90,242,.15);  color:#bf5af2; }
+  .t-special { background:rgba(245,166,35,.18);  color:var(--gold); }
+  .t-photo   { background:rgba(255,107,157,.15); color:var(--pink); }
+  .chev { font-size:16px; color:var(--subtle); transition:transform .3s; margin-left:8px; }
+  .dbody { display:none; padding:0 26px 26px; border-top:1px solid var(--border); }
+  .dbody.open { display:block; }
+  .dcols { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:20px; }
+  @media(max-width:600px){ .dcols { grid-template-columns:1fr; } }
+  .dlabel { font-family:var(--mono); font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  .alist { list-style:none; }
+  .alist li { padding:6px 0 6px 22px; position:relative; font-size:14px; border-bottom:1px solid var(--border); color:var(--text); line-height:1.45; }
+  .alist li:last-child { border-bottom:none; }
+  .alist li::before { content:'—'; position:absolute; left:0; color:var(--gold); font-size:11px; top:9px; }
+  .alist li.food::before   { content:'🍽'; font-size:11px; top:7px; }
+  .alist li.nature::before { content:'🌿'; font-size:11px; top:7px; }
+  .alist li.cult::before   { content:'🏛'; font-size:11px; top:7px; }
+  .alist li.fly::before    { content:'✈'; font-size:11px; top:7px; }
+  .alist li.car::before    { content:'🚗'; font-size:11px; top:7px; }
+  .alist li.boat::before   { content:'⛵'; font-size:11px; top:7px; }
+  .alist li.hike::before   { content:'🥾'; font-size:11px; top:7px; }
+  .alist li.swim::before   { content:'🏊'; font-size:11px; top:7px; }
+  .alist li.raft::before   { content:'🚣'; font-size:11px; top:7px; }
+  .alist li.photo::before  { content:'📸'; font-size:11px; top:7px; }
+  .alist li.star::before   { content:'⭐'; font-size:11px; top:7px; }
+  .li-note { font-size:12px; color:var(--muted); display:block; margin-top:1px; }
+  .iblock { background:var(--raised); border:1px solid var(--border); border-radius:8px; padding:14px 16px; }
+  .irow { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:5px 0; font-size:13px; border-bottom:1px solid var(--border); }
+  .irow:last-child { border-bottom:none; }
+  .irow .il { color:var(--muted); }
+  .irow .iv { text-align:right; font-weight:600; color:var(--text); }
+  .nbox { margin-top:14px; background:rgba(245,166,35,.06); border-left:2px solid var(--gold); border-radius:0 6px 6px 0; padding:11px 14px; font-size:13px; color:var(--muted); line-height:1.55; }
+  .nbox.photo { background:rgba(255,107,157,.06); border-left-color:var(--pink); }
+  .fw { margin-top:20px; }
 
-  footer { background: #111113; border-top: 1px solid var(--border); color: var(--subtle); text-align: center; padding: 40px; font-family: var(--mono); font-size: 10px; letter-spacing: 2px; }
-  footer span { color: var(--gold); }
+  /* SPECIAL HIGHLIGHT CARD */
+  .highlight-card { background:rgba(245,166,35,.06); border:1px solid rgba(245,166,35,.25); border-radius:10px; padding:16px 20px; margin-top:14px; }
+  .highlight-card .hl-title { font-size:15px; font-weight:700; color:var(--gold); margin-bottom:4px; letter-spacing:-0.01em; }
+  .highlight-card .hl-sub { font-size:13px; color:var(--muted); }
+
+  /* PHOTO SHOOT CARD */
+  .photo-card { background:rgba(255,107,157,.06); border:1px solid rgba(255,107,157,.25); border-radius:10px; padding:16px 20px; margin-top:14px; }
+  .photo-card .pt { font-size:15px; font-weight:700; color:var(--pink); margin-bottom:4px; letter-spacing:-0.01em; }
+  .photo-card .ps { font-size:13px; color:var(--muted); line-height:1.5; }
+
+  /* BOOKINGS */
+  .bgrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:600px){ .bgrid { grid-template-columns:1fr; } }
+  .bcard { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px 18px; display:flex; align-items:flex-start; gap:14px; box-shadow:0 2px 12px rgba(0,0,0,.2); }
+  .bcard.done { background:rgba(48,209,88,.05); border-color:rgba(48,209,88,.2); }
+  .bnum { width:26px; height:26px; border-radius:50%; background:var(--blue); color:#fff; font-family:var(--mono); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .bnum.done { background:var(--green); }
+  .btitle { font-size:14px; font-weight:600; letter-spacing:-0.01em; margin-bottom:3px; color:var(--text); }
+  .btitle.done { color:var(--green); }
+  .bdetail { font-size:12px; color:var(--muted); line-height:1.45; }
+  .blink { font-size:12px; color:var(--blue); text-decoration:none; display:inline-block; margin-top:3px; }
+  .blink:hover { text-decoration:underline; }
+
+  /* TIPS */
+  .tgrid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:600px){ .tgrid { grid-template-columns:1fr; } }
+  .tcard { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,.2); }
+  .ticon { font-size:22px; margin-bottom:10px; }
+  .ttitle { font-size:15px; font-weight:700; letter-spacing:-0.02em; margin-bottom:6px; }
+  .ttext { font-size:13px; color:var(--muted); line-height:1.55; }
+
+  /* PILL */
+  .spill { font-family:var(--mono); font-size:9px; letter-spacing:1px; text-transform:uppercase; padding:3px 10px; border-radius:20px; }
+  .sp-green { background:rgba(48,209,88,.15); color:var(--green); }
+  .sp-gold  { background:rgba(245,166,35,.15); color:var(--gold); }
+
+  /* FOOTER */
+  footer { background:#111113; border-top:1px solid var(--border); color:var(--subtle); text-align:center; padding:40px; font-family:var(--mono); font-size:10px; letter-spacing:2px; }
+  footer span { color:var(--gold); }
+
+  /* MISC */
+  .mono-label { font-family:var(--mono); font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-label">Jun 28 – Jul 5, 2026 &nbsp;·&nbsp; Slovenia</div>
-    <h1>Cameron &<br><em>Michelle</em></h1>
+    <div class="hero-eyebrow">28 June – 5 July 2026 &nbsp;·&nbsp; Slovenia</div>
+    <h1>Cameron &amp;<br><em>Michelle</em></h1>
     <div class="hero-sub">A week in the Julian Alps &amp; Ljubljana</div>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <span class="label">Duration</span>
-        <span class="value">7 nights · 8 days</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="label">Hotels</span>
-        <span class="value">3 properties · all A/C</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="label">Highlight dinner</span>
-        <span class="value">JAZ by Ana Roš · Sat Jul 4</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="label">Car</span>
-        <span class="value">AVIS · VCE pickup & dropoff</span>
-      </div>
+    <div class="hero-pills">
+      <div class="hero-pill"><span class="lbl">Duration</span><span class="val">8 days · 7 nights</span></div>
+      <div class="hero-pill"><span class="lbl">Hotels</span><span class="val">3 properties · all confirmed</span></div>
+      <div class="hero-pill"><span class="lbl">Dinner</span><span class="val">JAZ by Ana Roš · Sat 4 Jul</span></div>
+      <div class="hero-pill"><span class="lbl">Car</span><span class="val">AVIS · VCE pickup &amp; return</span></div>
     </div>
-    <div class="route-line">
-      <span class="route-stop">Venice ✈</span><span class="route-arrow">→</span>
-      <span class="route-stop">Kranjska Gora</span><span class="route-arrow">→</span>
-      <span class="route-stop">Lake Bled</span><span class="route-arrow">→</span>
-      <span class="route-stop">Ljubljana</span><span class="route-arrow">→</span>
+    <div class="route">
+      <span class="route-stop">Venice ✈</span><span class="route-arr">→</span>
+      <span class="route-stop">Kranjska Gora</span><span class="route-arr">→</span>
+      <span class="route-stop">Lake Bled</span><span class="route-arr">→</span>
+      <span class="route-stop">Ljubljana</span><span class="route-arr">→</span>
       <span class="route-stop">✈ Venice</span>
     </div>
   </div>
 </div>
 
-<nav class="sticky-nav">
+<!-- NAV -->
+<nav>
   <div class="nav-inner">
-    <a href="#flights" class="nav-item">Flights</a>
-    <a href="#hotels" class="nav-item">Hotels</a>
-    <a href="#wishlist" class="nav-item">Wishlist</a>
+    <a href="#glance"    class="nav-item">At a Glance</a>
+    <a href="#flights"   class="nav-item">Flights</a>
+    <a href="#hotels"    class="nav-item">Hotels</a>
+    <a href="#wishlist"  class="nav-item">Wishlist</a>
     <a href="#itinerary" class="nav-item">Itinerary</a>
-    <a href="#bookings" class="nav-item">To Book</a>
-    <a href="#tips" class="nav-item">Tips</a>
+    <a href="#bookings"  class="nav-item">To Book</a>
+    <a href="#tips"      class="nav-item">Tips</a>
   </div>
 </nav>
 
 <div class="main">
 
-  <section id="flights" class="flights-section">
-    <div class="section-header">
-      <h2 class="section-title">Flights</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="flights-grid">
-      <div class="flight-card">
-        <div class="flight-person">🌸 Michelle <span class="flight-conf">O91R58</span></div>
-        <div class="flight-leg">
-          <span class="flight-iata">SFO</span>
-          <div class="flight-mid">
-            <div class="flight-line-wrap"><div class="flight-dash"></div><span class="flight-plane">✈</span><div class="flight-dash"></div></div>
-            <span class="flight-num">AC 567 · Sat Jun 27</span>
-          </div>
-          <div class="flight-time">12:15 PM<br><span class="flight-arrive">YVR 2:39</span></div>
-        </div>
-        <div style="padding:4px 0"><span class="layover-tag">1hr 36min · Vancouver</span></div>
-        <div class="flight-leg">
-          <span class="flight-iata">YVR</span>
-          <div class="flight-mid">
-            <div class="flight-line-wrap"><div class="flight-dash"></div><span class="flight-plane">✈</span><div class="flight-dash"></div></div>
-            <span class="flight-num">LH 493 · overnight</span>
-          </div>
-          <div class="flight-time">4:15 PM<br><span class="flight-arrive">FRA 11:00</span></div>
-        </div>
-        <div style="padding:4px 0"><span class="layover-tag">1hr 40min · Frankfurt</span></div>
-        <div class="flight-leg">
-          <span class="flight-iata">FRA</span>
-          <div class="flight-mid">
-            <div class="flight-line-wrap"><div class="flight-dash"></div><span class="flight-plane">✈</span><div class="flight-dash"></div></div>
-            <span class="flight-num">LH 326 · Sun Jun 28</span>
-          </div>
-          <div class="flight-time">12:40 PM<br><span class="flight-arrive">VCE 14:00</span></div>
-        </div>
-      </div>
-      <div class="flight-card">
-        <div class="flight-person">🏏 Cameron <span class="flight-conf">8VQFWL</span></div>
-        <div class="flight-leg">
-          <span class="flight-iata">BUD</span>
-          <div class="flight-mid">
-            <div class="flight-line-wrap"><div class="flight-dash"></div><span class="flight-plane">✈</span><div class="flight-dash"></div></div>
-            <span class="flight-num">OS 632 · Sun Jun 28 · T2A</span>
-          </div>
-          <div class="flight-time">11:15 AM<br><span class="flight-arrive">VIE 12:00</span></div>
-        </div>
-        <div style="padding:4px 0"><span class="layover-tag">50min · Vienna T3</span></div>
-        <div class="flight-leg">
-          <span class="flight-iata">VIE</span>
-          <div class="flight-mid">
-            <div class="flight-line-wrap"><div class="flight-dash"></div><span class="flight-plane">✈</span><div class="flight-dash"></div></div>
-            <span class="flight-num">OS 543 · Sun Jun 28 · T3</span>
-          </div>
-          <div class="flight-time">12:50 PM<br><span class="flight-arrive">VCE 13:55</span></div>
-        </div>
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
-          <div class="day-section-label" style="margin-bottom:8px">After landing</div>
-          <div class="info-block">
-            <div class="info-row"><span class="lbl">AVIS pickup</span><span class="val">3:00 PM · Marco Polo</span></div>
-            <div class="info-row"><span class="lbl">Drive to Milka</span><span class="val">~2.5 hrs</span></div>
-            <div class="info-row"><span class="lbl">Check in</span><span class="val">8:00 PM</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="return-card">
-      <div class="return-header">
-        <div>
-          <div class="flight-person" style="margin-bottom:2px">🏠 Return — Together · Sun Jul 5</div>
-          <span style="font-size:13px;color:var(--muted)">Conf O91R58 · Leave Ljubljana 9:30 AM · Drop AVIS Marco Polo 12:30 PM</span>
-        </div>
-        <span class="status-pill status-confirmed">Confirmed</span>
-      </div>
-      <div class="return-segments">
-        <div class="return-seg">
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Depart</div>
-          <div class="return-iata">VCE</div>
-          <div class="return-detail">LH 327 · 2:40 PM</div>
-        </div>
-        <div class="return-seg">
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Frankfurt · 1hr 20min</div>
-          <div class="return-iata">FRA</div>
-          <div class="return-detail">Arrive 4:10 PM<br>UA 927 departs 5:30 PM</div>
-        </div>
-        <div class="return-seg">
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Home</div>
-          <div class="return-iata">SFO</div>
-          <div class="return-detail">7:50 PM PDT</div>
-        </div>
-      </div>
-      <div class="return-note">⏰ Be at Marco Polo by <strong>12:30 PM</strong> · Leave Ljubljana no later than <strong>9:30 AM</strong></div>
+  <!-- AT A GLANCE -->
+  <section id="glance" class="section">
+    <div class="sh"><h2>At a Glance</h2><div class="sh-line"></div></div>
+    <div class="glance">
+      <div class="glance-row"><span class="glance-lbl">Depart</span><span class="glance-val">Sunday 28 June — Venice Marco Polo (VCE)<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Return</span><span class="glance-val">Sunday 5 July — Venice Marco Polo (VCE)<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Night 1</span><span class="glance-val">Milka Hotel — Kranjska Gora<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Nights 2–4</span><span class="glance-val">Adora Luxury Hotel — Lake Bled<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Nights 5–7</span><span class="glance-val">InterContinental — Ljubljana<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Confirmed dining</span><span class="glance-val">JAZ Restaurant — Sat 4 Jul, 6:00 PM<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Car hire</span><span class="glance-val">AVIS — Collect &amp; return Venice Marco Polo<span class="conf">✔ Booked</span></span></div>
+      <div class="glance-row"><span class="glance-lbl">Photo shoot</span><span class="glance-val" style="color:var(--pink)">Old Town Ljubljana — Fri 3 Jul, sunset (~8:30 PM)</span></div>
     </div>
   </section>
 
-  <section id="hotels" class="hotels-section">
-    <div class="section-header">
-      <h2 class="section-title">Hotels</h2>
-      <div class="section-line"></div>
+  <!-- FLIGHTS -->
+  <section id="flights" class="section">
+    <div class="sh"><h2>Flights</h2><div class="sh-line"></div></div>
+    <div class="flights-grid">
+      <!-- Michelle -->
+      <div class="fcard">
+        <div class="fperson">🌸 Michelle <span class="fconf">O91R58</span></div>
+        <div class="fleg">
+          <span class="fiata">SFO</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">AC 567 · Sat Jun 27</span></div>
+          <div class="ftime">12:15 PM<strong>YVR 2:39</strong></div>
+        </div>
+        <div style="padding:4px 0"><span class="layover">1hr 36min · Vancouver</span></div>
+        <div class="fleg">
+          <span class="fiata">YVR</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">LH 493 · overnight</span></div>
+          <div class="ftime">4:15 PM<strong>FRA 11:00</strong></div>
+        </div>
+        <div style="padding:4px 0"><span class="layover">1hr 40min · Frankfurt</span></div>
+        <div class="fleg">
+          <span class="fiata">FRA</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">LH 326 · Sun Jun 28</span></div>
+          <div class="ftime">12:40 PM<strong>VCE 14:00</strong></div>
+        </div>
+      </div>
+      <!-- Cameron -->
+      <div class="fcard">
+        <div class="fperson">🏏 Cameron <span class="fconf">8VQFWL</span></div>
+        <div class="fleg">
+          <span class="fiata">BUD</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">OS 632 · Sun Jun 28 · T2A</span></div>
+          <div class="ftime">11:15 AM<strong>VIE 12:00</strong></div>
+        </div>
+        <div style="padding:4px 0"><span class="layover">50min · Vienna T3</span></div>
+        <div class="fleg">
+          <span class="fiata">VIE</span>
+          <div class="fmid"><div class="fline"><div class="fdash"></div><span class="fplane">✈</span><div class="fdash"></div></div><span class="fnum">OS 543 · Sun Jun 28 · T3</span></div>
+          <div class="ftime">12:50 PM<strong>VCE 13:55</strong></div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div class="dlabel" style="margin-bottom:8px">After landing</div>
+          <div class="iblock">
+            <div class="irow"><span class="il">AVIS pickup</span><span class="iv">3:00 PM · Marco Polo</span></div>
+            <div class="irow"><span class="il">Drive to Milka Hotel</span><span class="iv">~2.5 hrs via Karavanke Tunnel</span></div>
+            <div class="irow"><span class="il">Check in</span><span class="iv">~8:00 PM (call ahead)</span></div>
+          </div>
+        </div>
+      </div>
     </div>
-    <table class="hotel-table">
-      <thead>
-        <tr><th>Hotel</th><th>Location</th><th>Dates</th><th>Nights</th><th>A/C</th><th>Status</th></tr>
-      </thead>
+    <!-- Return -->
+    <div class="rcard">
+      <div class="rhead">
+        <div>
+          <div class="fperson" style="margin-bottom:3px">🏠 Return — Together · Sun 5 Jul</div>
+          <span style="font-size:13px;color:var(--muted)">Conf O91R58 · Leave Ljubljana by 9:00 AM · Drop AVIS Marco Polo by 12:30 PM</span>
+        </div>
+        <span class="spill sp-green">Confirmed</span>
+      </div>
+      <div class="rsegs">
+        <div class="rseg"><div class="mono-label">Depart</div><div class="riata">VCE</div><div class="rdetail">LH 327 · 2:40 PM</div></div>
+        <div class="rseg"><div class="mono-label">Frankfurt · 1hr 20min</div><div class="riata">FRA</div><div class="rdetail">Arrive 4:10 PM<br>UA 927 departs 5:30 PM</div></div>
+        <div class="rseg"><div class="mono-label">Home</div><div class="riata">SFO</div><div class="rdetail">7:50 PM PDT</div></div>
+      </div>
+      <div class="rnote">⏰ Leave Ljubljana by <strong>9:00 AM</strong> · Allow extra time for the Karavanke Tunnel on Sundays · Aim at Marco Polo <strong>2.5 hrs before departure</strong></div>
+    </div>
+  </section>
+
+  <!-- HOTELS -->
+  <section id="hotels" class="section">
+    <div class="sh"><h2>Hotels</h2><div class="sh-line"></div></div>
+    <table class="htable">
+      <thead><tr><th>Hotel</th><th>Location</th><th>Dates</th><th>Nights</th><th>Status</th></tr></thead>
       <tbody>
         <tr>
-          <td><div class="hotel-name">Boutique Hotel Milka</div><div class="hotel-note">Vršiška cesta · Ask for the lake room · Legendary breakfast</div></td>
+          <td><div class="hname">Boutique Hotel Milka</div><div class="haddr">Kolodvorska ulica 15, 4280 Kranjska Gora</div><div class="hnote">Call ahead if arriving after 9 PM · Ask for the lake room</div></td>
           <td>Kranjska Gora</td>
           <td style="font-family:var(--mono);font-size:11px">Jun 28</td>
-          <td class="hotel-nights">1</td>
-          <td style="color:var(--green);font-weight:700">✓</td>
-          <td><span class="status-pill status-confirmed">Booked</span></td>
+          <td class="hnights">1</td>
+          <td><span class="spill sp-green">Booked</span></td>
         </tr>
         <tr>
-          <td><div class="hotel-name">Adora Luxury Hotel</div><div class="hotel-note">Cesta svobode · 9 rooms · Lakeside villa · local owner's personal pick</div></td>
+          <td><div class="hname">Adora Luxury Hotel</div><div class="haddr">Kidričeva cesta 17, 4260 Bled</div><div class="hnote">Adults-only · direct lake views · confirm breakfast &amp; spa bookings in advance</div></td>
           <td>Lake Bled</td>
           <td style="font-family:var(--mono);font-size:11px">Jun 29 – Jul 2</td>
-          <td class="hotel-nights">3</td>
-          <td style="color:var(--green);font-weight:700">✓</td>
-          <td><span class="status-pill status-confirmed">Booked</span></td>
+          <td class="hnights">3</td>
+          <td><span class="spill sp-green">Booked</span></td>
         </tr>
         <tr>
-          <td><div class="hotel-name">InterContinental Ljubljana</div><div class="hotel-note">Slovenska cesta 59 · Panoramic spa + indoor pool · All sites walkable</div></td>
+          <td><div class="hname">InterContinental Ljubljana</div><div class="haddr">Slovenska cesta 59, 1000 Ljubljana</div><div class="hnote">IHG One Rewards — confirm points posting · 10 min walk to Old Town</div></td>
           <td>Ljubljana</td>
           <td style="font-family:var(--mono);font-size:11px">Jul 2 – Jul 5</td>
-          <td class="hotel-nights">3</td>
-          <td style="color:var(--green);font-weight:700">✓</td>
-          <td><span class="status-pill status-confirmed">Booked</span></td>
+          <td class="hnights">3</td>
+          <td><span class="spill sp-green">Booked</span></td>
         </tr>
       </tbody>
     </table>
   </section>
 
-  <section id="wishlist" class="wishlist-section">
-    <div class="section-header">
-      <h2 class="section-title">Michelle's Wishlist</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="wishlist-grid">
-      <div class="wish-card"><div class="wish-check">✓</div><div><div class="wish-title">Lake Bled — swim, row, Mala Osojnica hike</div><div class="wish-day">Monday Jun 29</div></div></div>
-      <div class="wish-card"><div class="wish-check">✓</div><div><div class="wish-title">Triglav National Park — Vintgar Gorge</div><div class="wish-day">Tuesday Jun 30</div></div></div>
-      <div class="wish-card"><div class="wish-check">✓</div><div><div class="wish-title">Ljubljana — castle, food, market</div><div class="wish-day">Thu Jul 2 & Fri Jul 3</div></div></div>
-      <div class="wish-card"><div class="wish-check">✓</div><div><div class="wish-title">Predjama Castle</div><div class="wish-day">Saturday Jul 4</div></div></div>
+  <!-- WISHLIST -->
+  <section id="wishlist" class="section">
+    <div class="sh"><h2>Michelle's Wishlist</h2><div class="sh-line"></div></div>
+    <div class="wgrid">
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Lake Bled — swim, row, Mala Osojnica hike</div><div class="wday">Monday Jun 29</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Triglav National Park — Vintgar Gorge</div><div class="wday">Tuesday Jun 30</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Ljubljana — castle, food, market</div><div class="wday">Thu Jul 2 &amp; Fri Jul 3</div></div></div>
+      <div class="wcard"><div class="wcheck">✓</div><div><div class="wtitle">Predjama Castle</div><div class="wday">Saturday Jul 4</div></div></div>
     </div>
   </section>
 
-  <section id="itinerary" class="days-section">
-    <div class="section-header">
-      <h2 class="section-title">Itinerary</h2>
-      <div class="section-line"></div>
-    </div>
+  <!-- ITINERARY -->
+  <section id="itinerary" class="section">
+    <div class="sh"><h2>Itinerary</h2><div class="sh-line"></div></div>
 
-    <!-- Day 1 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">1</div>
+    <!-- DAY 1 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">1</div>
         <div>
-          <div class="day-date">Sunday · Jun 28</div>
-          <div class="day-title">Arrive — Venice → Kranjska Gora</div>
-          <div class="day-subtitle">Both fly into Marco Polo · AVIS pickup · Drive to Milka Hotel</div>
+          <div class="ddate">Sunday · 28 June</div>
+          <div class="dtitle">Arrive — Venice → Kranjska Gora</div>
+          <div class="dsub">Both fly into Marco Polo · AVIS pickup · Drive via Karavanke Tunnel</div>
         </div>
-        <div><div class="day-tags"><span class="tag tag-travel">Travel</span><span class="tag tag-hotel">Milka</span></div><div class="chevron">›</div></div>
+        <div><div class="dtags"><span class="tag t-travel">Travel</span><span class="tag t-hotel">Milka</span></div><div class="chev">›</div></div>
       </div>
-      <div class="day-body">
-        <div class="day-sections">
+      <div class="dbody">
+        <div class="dcols">
           <div>
-            <div class="day-section-label">Michelle's journey</div>
-            <ul class="activity-list">
-              <li class="flight">Departs SFO Jun 27 12:15 PM · AC 567</li>
-              <li class="flight">YVR → FRA overnight · LH 493</li>
-              <li class="flight">FRA → VCE · LH 326 · arrives 2:00 PM</li>
+            <div class="dlabel">Michelle's journey</div>
+            <ul class="alist">
+              <li class="fly">Departs SFO Jun 27 12:15 PM · AC 567</li>
+              <li class="fly">YVR → FRA overnight · LH 493</li>
+              <li class="fly">FRA → VCE · LH 326 · arrives 2:00 PM</li>
             </ul>
           </div>
           <div>
-            <div class="day-section-label">Cameron's journey</div>
-            <ul class="activity-list">
-              <li class="flight">BUD → VIE · OS 632 · 11:15 AM (T2A)</li>
-              <li class="flight">VIE → VCE · OS 543 · arrives 1:55 PM (T3)</li>
+            <div class="dlabel">Cameron's journey</div>
+            <ul class="alist">
+              <li class="fly">BUD → VIE · OS 632 · 11:15 AM (T2A)</li>
+              <li class="fly">VIE → VCE · OS 543 · arrives 1:55 PM (T3)</li>
               <li class="car">AVIS pickup 3:00 PM · Marco Polo airport</li>
             </ul>
           </div>
         </div>
-        <div class="full-width">
-          <div class="day-section-label">Together</div>
-          <ul class="activity-list">
-            <li class="car">Drive to Milka Hotel, Kranjska Gora · ~2.5 hours · check in 8:00 PM</li>
-            <li class="food">Dinner at Gostilna Pri Martinu, Kranjska Gora · book ahead · relaxed arrival meal</li>
+        <div class="fw">
+          <div class="dlabel">Together</div>
+          <ul class="alist">
+            <li class="car">Drive Venice → Kranjska Gora (~2.5 hrs, ~205 km via A23/E55 and Karavanke Tunnel)</li>
+            <li class="car">Border crossing: Slovenian border at the tunnel — EU/Schengen, straightforward</li>
+            <li>Check in Milka Hotel · call ahead if arriving after 9 PM</li>
+            <li class="food">Dinner in Kranjska Gora — Gostišče Jurij or Pri Martinu for solid Slovenian cooking</li>
           </ul>
-          <div class="notes-box">💡 Milka restaurant is fully booked Jun 28, but the breakfast on Monday morning is legendary. Set an alarm for it — do not sleep through it.</div>
+          <div class="nbox">💡 The Karavanke Tunnel has a toll (~€12 northbound) — keep card or cash handy. Confirm the rental car includes a Slovenian motorway vignette when collecting at Marco Polo. Milka restaurant is booked out tonight but the breakfast tomorrow morning is legendary.</div>
         </div>
       </div>
     </div>
 
-    <!-- Day 2 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">2</div>
+    <!-- DAY 2 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">2</div>
         <div>
-          <div class="day-date">Monday · Jun 29</div>
-          <div class="day-title">Lake Bled Day</div>
-          <div class="day-subtitle">Mala Osojnica hike · swim · pletna boat · check in Adora</div>
+          <div class="ddate">Monday · 29 June</div>
+          <div class="dtitle">Kranjska Gora → Lake Bled</div>
+          <div class="dsub">Jasna Lake morning · drive to Bled · Mala Osojnica · swim · pletna boat</div>
         </div>
-        <div><div class="day-tags"><span class="tag tag-nature">Nature</span><span class="tag tag-hotel">Adora</span></div><div class="chevron">›</div></div>
+        <div><div class="dtags"><span class="tag t-nature">Nature</span><span class="tag t-hotel">Adora</span></div><div class="chev">›</div></div>
       </div>
-      <div class="day-body">
-        <div class="day-sections">
+      <div class="dbody">
+        <div class="dcols">
           <div>
-            <div class="day-section-label">Morning</div>
-            <ul class="activity-list">
-              <li>Milka breakfast — don't skip it</li>
-              <li class="car">Check out 11:00 AM · drive to Bled · 35 min</li>
-              <li>Park at Mlino village on the southern shore</li>
-              <li class="hike">Mala Osojnica hike · 45 min up · the best view in Slovenia
-                <span class="li-note">Full lake, island church, castle, Julian Alps — all at once</span>
+            <div class="dlabel">Morning — Kranjska Gora</div>
+            <ul class="alist">
+              <li>Milka breakfast — legendary, do not skip it</li>
+              <li class="nature">Morning walk to Jasna Lake · 10 min from town · stunning Alpine backdrop</li>
+              <li>Browse the main street before checkout</li>
+              <li class="car">Check out by 11:00 AM · drive to Bled · ~40 min</li>
+            </ul>
+          </div>
+          <div>
+            <div class="dlabel">Afternoon — Lake Bled</div>
+            <ul class="alist">
+              <li>Check in Adora Luxury Hotel · 3:00 PM · request lake-facing room</li>
+              <li class="hike">Mala Osojnica hike · park at Mlino · 45 min up
+                <span class="li-note">Best viewpoint in Slovenia — full lake, island church, castle, Julian Alps</span>
               </li>
-              <li class="hike">Come down · 30 min · straight to the water</li>
-            </ul>
-          </div>
-          <div>
-            <div class="day-section-label">Afternoon</div>
-            <ul class="activity-list">
-              <li class="swim">Swim Lake Bled · water 20–22°C in late June</li>
-              <li class="boat">Pletna boat to island church · ring the wishing bell
-                <span class="li-note">Pre-arrange through Adora · ~€18pp return</span>
+              <li class="swim">Swim Lake Bled · water ~21°C in late June</li>
+              <li class="boat">Pletna boat to Bled Island · ring the wishing bell
+                <span class="li-note">Arrange via Adora the night before · ~€18pp · private hire fills up</span>
               </li>
-              <li>Back on shore by ~2:30 PM</li>
-              <li>Check in Adora Luxury Hotel · 3:00 PM</li>
-              <li class="food">Dinner in Bled village or at Adora's French restaurant</li>
+              <li class="food">Dinner at hotel or Vila Bled restaurant — historic presidential villa on the lake</li>
+              <li class="food">Try kremna rezina (Bled cream cake) at Park Restaurant on the lakefront</li>
             </ul>
           </div>
         </div>
-        <div class="notes-box">💡 Arrange the pletna boat through Adora when you check in. If you haven't booked Vintgar Gorge timed entry yet — do it this evening at bled.si/en/vintgar</div>
-      </div>
-    </div>
-
-    <!-- Day 3 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">3</div>
-        <div>
-          <div class="day-date">Tuesday · Jun 30</div>
-          <div class="day-title">Triglav National Park</div>
-          <div class="day-subtitle">Vintgar Gorge 8 AM · Lake Bohinj · Savica Waterfall or Vogel</div>
-        </div>
-        <div><div class="day-tags"><span class="tag tag-nature">Nature</span></div><div class="chevron">›</div></div>
-      </div>
-      <div class="day-body">
-        <div class="day-sections">
-          <div>
-            <div class="day-section-label">Morning — 8:00 AM</div>
-            <ul class="activity-list">
-              <li class="nature">Vintgar Gorge · 15 min from Adora · go early to beat crowds</li>
-              <li>1.6km wooden boardwalk through a dramatic river canyon</li>
-              <li>Easy walking · back at the car by 9:30 AM</li>
-            </ul>
-            <div class="info-block" style="margin-top:12px">
-              <div class="info-row"><span class="lbl">Entry</span><span class="val" style="color:var(--blue)">Timed ticket required</span></div>
-              <div class="info-row"><span class="lbl">Distance</span><span class="val">15 min from Adora</span></div>
-              <div class="info-row"><span class="lbl">Walk</span><span class="val">1.6km · ~1.5hrs total</span></div>
-            </div>
-          </div>
-          <div>
-            <div class="day-section-label">Afternoon — Lake Bohinj (45 min drive)</div>
-            <ul class="activity-list">
-              <li class="swim">Swim Lake Bohinj · wilder and quieter than Bled</li>
-              <li class="hike">Savica Waterfall hike · 1hr return · 78m waterfall at source of the Sava</li>
-              <li>Or: Vogel cable car · 1540m summit · panoramic Alpine views · 20min each way</li>
-              <li class="food">Back to Bled for dinner</li>
-            </ul>
-          </div>
+        <div class="iblock" style="margin-top:20px">
+          <div class="irow"><span class="il">Pletna boat</span><span class="iv">Arrange via Adora · ~€18pp return</span></div>
+          <div class="irow"><span class="il">Mala Osojnica park</span><span class="iv">Mlino village · southern shore</span></div>
+          <div class="irow"><span class="il">Adora check in</span><span class="iv">3:00 PM</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Day 4 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">4</div>
+    <!-- DAY 3 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">3</div>
         <div>
-          <div class="day-date">Wednesday · Jul 1</div>
-          <div class="day-title">Soča River Rafting</div>
-          <div class="day-subtitle">Drive to Bovec · half-day whitewater on the emerald river</div>
+          <div class="ddate">Tuesday · 30 June</div>
+          <div class="dtitle">Bled Castle + Vintgar Gorge</div>
+          <div class="dsub">Early castle · gorge · afternoon at leisure · lake evening</div>
         </div>
-        <div><div class="day-tags"><span class="tag tag-nature">Adventure</span></div><div class="chevron">›</div></div>
+        <div><div class="dtags"><span class="tag t-culture">History</span><span class="tag t-nature">Nature</span></div><div class="chev">›</div></div>
       </div>
-      <div class="day-body">
-        <div class="day-sections">
+      <div class="dbody">
+        <div class="dcols">
           <div>
-            <div class="day-section-label">Morning — early start</div>
-            <ul class="activity-list">
-              <li class="car">Drive to Bovec in the Soča Valley · ~1.5 hours from Bled</li>
-              <li class="raft">Half-day whitewater rafting on the Soča River</li>
-              <li>All kit provided — wetsuits, helmets, paddles</li>
-              <li>Class II–IV rapids · stunning emerald water · no experience needed</li>
-            </ul>
-            <div class="info-block" style="margin-top:12px">
-              <div class="info-row"><span class="lbl">Best operators</span><span class="val">SportMix · Nature's Ways</span></div>
-              <div class="info-row"><span class="lbl">Duration on water</span><span class="val">~3 hours</span></div>
-              <div class="info-row"><span class="lbl">Water temp</span><span class="val">~8°C · full wetsuits provided</span></div>
-            </div>
-          </div>
-          <div>
-            <div class="day-section-label">Afternoon</div>
-            <ul class="activity-list">
-              <li class="car">Drive back to Bled · ~1.5 hours</li>
-              <li class="swim">Lake swim at Adora · last evening on the lake</li>
-              <li class="food">Dinner at Adora's French restaurant</li>
-            </ul>
-          </div>
-        </div>
-        <div class="notes-box">💡 Book SportMix (sportmix.si) or Nature's Ways (econaturesways.com) well in advance — both fill up fast in July. The Soča is the most stunning river in Slovenia. Worth every minute of the drive.</div>
-      </div>
-    </div>
-
-    <!-- Day 5 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">5</div>
-        <div>
-          <div class="day-date">Thursday · Jul 2</div>
-          <div class="day-title">Bled → Ljubljana</div>
-          <div class="day-subtitle">Check out Adora 11 AM · 45 min drive · Castle · Riverfront dinner</div>
-        </div>
-        <div><div class="day-tags"><span class="tag tag-culture">Culture</span><span class="tag tag-hotel">InterCon</span></div><div class="chevron">›</div></div>
-      </div>
-      <div class="day-body">
-        <div class="day-sections">
-          <div>
-            <div class="day-section-label">Morning</div>
-            <ul class="activity-list">
-              <li>Last morning at Adora · swim · balcony breakfast · final lake views</li>
-              <li class="car">Check out 11:00 AM · drive Ljubljana · 45 min</li>
-              <li>Check in InterContinental · 3:00 PM · use panoramic spa this afternoon</li>
-            </ul>
-            <div class="info-block" style="margin-top:12px">
-              <div class="info-row"><span class="lbl">Drive</span><span class="val">Bled → Ljubljana · 45 min</span></div>
-              <div class="info-row"><span class="lbl">Adora check out</span><span class="val">11:00 AM</span></div>
-              <div class="info-row"><span class="lbl">InterCon check in</span><span class="val">3:00 PM</span></div>
-            </div>
-          </div>
-          <div>
-            <div class="day-section-label">Afternoon / Evening</div>
-            <ul class="activity-list">
-              <li class="culture">Ljubljana Castle · history, audio tour, city panorama
-                <span class="li-note">800 years of Slovenian history · great audio guide</span>
+            <div class="dlabel">Morning</div>
+            <ul class="alist">
+              <li class="cult">Bled Castle (Blejski Grad) · opens 8:00 AM · allow 1.5 hrs
+                <span class="li-note">Museum, battlements, panoramic Alpine views — exceptional. Small wine cellar inside. ✅ Tickets booked</span>
               </li>
-              <li class="food">Dinner on the Ljubljanica riverfront · ask concierge to book ahead</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Day 6 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">6</div>
-        <div>
-          <div class="day-date">Friday · Jul 3</div>
-          <div class="day-title">Ljubljana Full Day</div>
-          <div class="day-subtitle">Museum of Modern Art · Pogačar market · Old town wander</div>
-        </div>
-        <div><div class="day-tags"><span class="tag tag-culture">Art</span><span class="tag tag-food">Food</span></div><div class="chevron">›</div></div>
-      </div>
-      <div class="day-body">
-        <div class="day-sections">
-          <div>
-            <div class="day-section-label">Morning — opens 10:00 AM</div>
-            <ul class="activity-list">
-              <li class="culture">Museum of Modern Art · Slovenian permanent collection
-                <span class="li-note">World-class and genuinely surprises people. Allow 2 hours.</span>
+              <li class="nature">Vintgar Gorge · 10 min drive from Bled · 1.6 km boardwalk
+                <span class="li-note">Go early — gets busy by 10 AM. Timed entry required. ✅ Booked</span>
               </li>
             </ul>
           </div>
           <div>
-            <div class="day-section-label">Afternoon</div>
-            <ul class="activity-list">
-              <li>Pogačar Square market · open until ~6 PM weekdays
-                <span class="li-note">Local crafts, honey, ceramics · Michelle's souvenir stop</span>
+            <div class="dlabel">Afternoon / Evening</div>
+            <ul class="alist">
+              <li>Lunch at hotel or near the castle</li>
+              <li>Afternoon at leisure — spa, pool, kayak or paddleboard on the lake</li>
+              <li>Souvenir shopping: Galerija Mikame · Cesta svobode 15, Bled</li>
+              <li class="food">Dinner at Ostarija Peglez'n — cosy Bled old town spot, excellent grilled meats
+                <span class="li-note">Popular — book ahead for dinner</span>
               </li>
-              <li class="food">Lunch on the Ljubljanica riverfront</li>
-              <li>Wander the old town · Plečnik market hall · streets under the castle</li>
-              <li class="food">Dinner · ask InterContinental concierge to recommend and book</li>
+              <li>Evening stroll along the lake promenade</li>
             </ul>
-          </div>
-        </div>
-        <div class="notes-box">💡 The covered market hall (Plečnikove tržnice) next to Pogačar Square is an architectural masterpiece. Metelkova arts district is worth a wander in the evening — former Yugoslav military barracks turned into an arts hub.</div>
-      </div>
-    </div>
-
-    <!-- Day 7 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">7</div>
-        <div>
-          <div class="day-date">Saturday · Jul 4</div>
-          <div class="day-title">Predjama Castle + JAZ Dinner</div>
-          <div class="day-subtitle">Leave 9 AM · Castle 10 AM · back 1:30 PM · JAZ 6 PM ✅</div>
-        </div>
-        <div><div class="day-tags"><span class="tag tag-culture">History</span><span class="tag tag-special">⭐ JAZ</span></div><div class="chevron">›</div></div>
-      </div>
-      <div class="day-body">
-        <div class="day-sections">
-          <div>
-            <div class="day-section-label">Morning — leave 9:00 AM sharp</div>
-            <ul class="activity-list">
-              <li class="car">Drive to Predjama · ~1 hour from InterContinental</li>
-              <li class="culture">Predjama Castle · arrive exactly 10:00 AM (opening time)</li>
-              <li>12th century castle built literally into a cave mouth in a cliff face</li>
-              <li>Erasmus of Lueg held it against the Habsburgs via a secret cave tunnel</li>
-              <li>Audio tour included and genuinely good · allow 1.5 hours</li>
-              <li class="car">Back in Ljubljana by 1:30 PM</li>
-            </ul>
-          </div>
-          <div>
-            <div class="day-section-label">Afternoon / Evening</div>
-            <ul class="activity-list">
-              <li>Free afternoon · riverfront terrace · glass of Slovenian wine</li>
-              <li>Final wander through the old town</li>
-            </ul>
-            <div class="info-block" style="margin-top:12px">
-              <div class="info-row"><span class="lbl">Restaurant</span><span class="val">JAZ by Ana Roš</span></div>
-              <div class="info-row"><span class="lbl">Address</span><span class="val">Čopova ulica 5a</span></div>
-              <div class="info-row"><span class="lbl">Time</span><span class="val" style="color:var(--green)">6:00 PM ✅ Booked</span></div>
-            </div>
-            <div class="notes-box" style="margin-top:10px">Ana Roš holds 3 Michelin stars at Hiša Franko. JAZ is her Ljubljana restaurant. This is the meal of the trip.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Day 8 -->
-    <div class="day-card">
-      <div class="day-header" onclick="toggleDay(this)">
-        <div class="day-num">8</div>
+    <!-- DAY 4 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">4</div>
         <div>
-          <div class="day-date">Sunday · Jul 5</div>
-          <div class="day-title">Drive to Venice → Home</div>
-          <div class="day-subtitle">Leave 9:30 AM · Drop AVIS 12:30 PM · Fly 2:40 PM</div>
+          <div class="ddate">Wednesday · 1 July</div>
+          <div class="dtitle">Triglav National Park — Bohinj Day</div>
+          <div class="dsub">Lake Bohinj · Savica Waterfall · Vogel cable car · back to Bled</div>
         </div>
-        <div><div class="day-tags"><span class="tag tag-travel">Travel</span></div><div class="chevron">›</div></div>
+        <div><div class="dtags"><span class="tag t-nature">Nature</span></div><div class="chev">›</div></div>
       </div>
-      <div class="day-body">
-        <div class="day-sections">
+      <div class="dbody">
+        <div class="dcols">
           <div>
-            <div class="day-section-label">Morning</div>
-            <ul class="activity-list">
-              <li>Check out InterContinental Ljubljana · by 9:30 AM</li>
-              <li class="car">Drive Ljubljana → Venice Marco Polo · ~3.5 hours</li>
-              <li class="car">Drop AVIS at Marco Polo · by 12:30 PM</li>
+            <div class="dlabel">Morning</div>
+            <ul class="alist">
+              <li class="car">Drive Bled → Lake Bohinj · ~30 min via Bohinjska Bistrica</li>
+              <li class="swim">Morning walk along the lakeshore or rent kayaks/SUPs</li>
+              <li class="hike">Savica Waterfall hike from the western end of the lake
+                <span class="li-note">25 min each way · dramatic 78m waterfall · wear proper footwear</span>
+              </li>
+              <li class="nature">Vogel cable car for sweeping Triglav panoramas · ~€18 return
+                <span class="li-note">Runs year-round · check July operating schedule</span>
+              </li>
             </ul>
-            <div class="info-block" style="margin-top:12px">
-              <div class="info-row"><span class="lbl">Leave Ljubljana</span><span class="val" style="color:var(--blue)">No later than 9:30 AM</span></div>
-              <div class="info-row"><span class="lbl">Drive</span><span class="val">~3.5 hours</span></div>
-              <div class="info-row"><span class="lbl">AVIS drop</span><span class="val">Marco Polo · 12:30 PM</span></div>
+          </div>
+          <div>
+            <div class="dlabel">Afternoon</div>
+            <ul class="alist">
+              <li class="food">Lunch in the Bohinj valley — Gostišče Rupa is reliable</li>
+              <li class="car">Return to Bled by late afternoon</li>
+              <li>Bohinj is significantly less touristy than Bled — enjoy the quiet</li>
+              <li class="food">Dinner at Adora or in Bled village</li>
+            </ul>
+          </div>
+        </div>
+        <div class="nbox">💡 Wednesday is ideal for Bohinj — fewer day-trippers from Ljubljana than on weekends.</div>
+      </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">5</div>
+        <div>
+          <div class="ddate">Thursday · 2 July</div>
+          <div class="dtitle">Bled → Ljubljana</div>
+          <div class="dsub">Final Bled morning · 55 min drive · Old Town · Castle · Riverfront</div>
+        </div>
+        <div><div class="dtags"><span class="tag t-culture">Culture</span><span class="tag t-hotel">InterCon</span></div><div class="chev">›</div></div>
+      </div>
+      <div class="dbody">
+        <div class="dcols">
+          <div>
+            <div class="dlabel">Morning — Last Look at Bled</div>
+            <ul class="alist">
+              <li>Leisurely hotel breakfast · final walk or coffee on the lakefront</li>
+              <li class="car">Check out by 11:00 AM</li>
+              <li class="car">Drive Bled → Ljubljana · ~55 min · ~56 km via A2 motorway</li>
+              <li>Check in InterContinental · 3:00 PM</li>
+            </ul>
+            <div class="iblock" style="margin-top:12px">
+              <div class="irow"><span class="il">Drive</span><span class="iv">~55 min via A2</span></div>
+              <div class="irow"><span class="il">Adora checkout</span><span class="iv">11:00 AM</span></div>
+              <div class="irow"><span class="il">InterCon check in</span><span class="iv">3:00 PM</span></div>
             </div>
           </div>
           <div>
-            <div class="day-section-label">Flights home</div>
-            <ul class="activity-list">
-              <li class="flight">LH 327 · VCE → FRA · 2:40 PM</li>
-              <li class="flight">Arrives Frankfurt 4:10 PM · 1hr 20min</li>
-              <li class="flight">UA 927 · FRA → SFO · departs 5:30 PM</li>
-              <li class="flight">Arrives SFO 7:50 PM PDT</li>
+            <div class="dlabel">Afternoon / Evening</div>
+            <ul class="alist">
+              <li class="cult">Walk the Triple Bridge (Tromostovje) and Prešeren Square — heart of the old town</li>
+              <li class="cult">Ljubljana Castle by cable car or on foot — good views over the city</li>
+              <li>Browse the open-air market along the Ljubljanica (winds down by 2–3 PM)</li>
+              <li>Explore Metelkova arts district — lively from early evening</li>
+              <li class="food">Dinner at Manna or Strelec inside the castle — book ahead for Strelec</li>
             </ul>
           </div>
         </div>
-        <div class="notes-box">⏰ The 9:30 AM departure is important. 3.5 hours to Marco Polo, buffer for traffic approaching Venice, and time to drop the car before check-in. Don't push it.</div>
+        <div class="nbox">💡 Ljubljana city centre is traffic-free most of the day. Park at the InterContinental (valet recommended) and walk everywhere. The hotel is 10 minutes on foot from all the main sights.</div>
+      </div>
+    </div>
+
+    <!-- DAY 6 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">6</div>
+        <div>
+          <div class="ddate">Friday · 3 July</div>
+          <div class="dtitle">Ljubljana Full Day + Photo Shoot</div>
+          <div class="dsub">Museum · Market · Old Town · Sunset photo shoot ~8:30 PM</div>
+        </div>
+        <div><div class="dtags"><span class="tag t-culture">Art</span><span class="tag t-food">Food</span><span class="tag t-photo">📸 Photos</span></div><div class="chev">›</div></div>
+      </div>
+      <div class="dbody">
+        <div class="dcols">
+          <div>
+            <div class="dlabel">Morning</div>
+            <ul class="alist">
+              <li>Hotel breakfast · walk to Robba Fountain and the Cathedral of St Nicholas</li>
+              <li class="cult">Museum of Modern Art · Slovenian permanent collection · genuinely world-class · allow 2 hrs
+                <span class="li-note">Opens 10:00 AM</span>
+              </li>
+              <li>Explore Old Town alleyways — strong independent boutique scene</li>
+              <li>Coffee at Kavarna Tromostovje overlooking the Triple Bridge — classic Ljubljana</li>
+            </ul>
+          </div>
+          <div>
+            <div class="dlabel">Afternoon</div>
+            <ul class="alist">
+              <li>Pogačar Square market · open until ~6 PM · Michelle's souvenir stop
+                <span class="li-note">Local crafts, honey, ceramics, textiles</span>
+              </li>
+              <li class="food">Lunch along the canal · outdoor terrace bars busy from early afternoon</li>
+              <li>Tivoli Park — pleasant afternoon stroll or cycle hire (BicikeLJ city scheme — first hour free)</li>
+              <li>Option: guided food tour · 3 hrs from the market · 7–8 stops · book ahead</li>
+              <li class="food">Early dinner before the shoot — give yourselves time to change and get to the old town</li>
+            </ul>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="pt">📸 Sunset Photo Shoot — ~8:30 PM</div>
+          <div class="ps">Old Town Ljubljana. Sunset in Ljubljana on 3 July is around 8:45 PM — the golden hour light on the Triple Bridge, the Ljubljanica riverfront, and the streets under the castle hill is exceptional. Wear something you'd be happy to be photographed in. Allow 1.5 to 2 hours for the shoot. The riverfront cafes and the castle-facing alleyways are the best backdrops.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 7 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">7</div>
+        <div>
+          <div class="ddate">Saturday · 4 July</div>
+          <div class="dtitle">Predjama Castle + JAZ Dinner</div>
+          <div class="dsub">Leave 9 AM · Predjama 10 AM · back by 2 PM · JAZ 6 PM ✅</div>
+        </div>
+        <div><div class="dtags"><span class="tag t-culture">History</span><span class="tag t-special">⭐ JAZ</span></div><div class="chev">›</div></div>
+      </div>
+      <div class="dbody">
+        <div class="dcols">
+          <div>
+            <div class="dlabel">Morning — leave 9:00 AM sharp</div>
+            <ul class="alist">
+              <li class="car">Drive Ljubljana → Predjama · ~45 min · ~50 km via A1 toward Koper</li>
+              <li class="cult">Predjama Castle · arrive 10:00 AM (opening time) · ✅ Tickets booked</li>
+              <li>One of the most extraordinary castles in Europe — built into the mouth of a 123m cliff cave</li>
+              <li>The legend of Erasmus of Lueg and the secret cave escape tunnel is a great story</li>
+              <li>Audio tour included · allow 1.5–2 hrs for castle and cave system beneath</li>
+              <li class="car">Back in Ljubljana by 2:00–3:00 PM</li>
+            </ul>
+          </div>
+          <div>
+            <div class="dlabel">Afternoon / Evening</div>
+            <ul class="alist">
+              <li>Saturday market along the Ljubljanica — winds down around 2 PM · catch the tail end</li>
+              <li>Rest at the hotel before dinner</li>
+            </ul>
+            <div class="highlight-card">
+              <div class="hl-title">⭐ JAZ by Ana Roš — 6:00 PM</div>
+              <div class="hl-sub">Čopova ulica 5a, Ljubljana · Reservation confirmed ✅<br>Reconfirm the day before with any dietary notes. Expect 2.5–3 hrs for the tasting menu. Slovenian wine pairing is worth it. Ana Roš holds 3 Michelin stars at Hiša Franko — this is the meal of the trip.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 8 -->
+    <div class="dcard">
+      <div class="dhead" onclick="toggle(this)">
+        <div class="dnum">8</div>
+        <div>
+          <div class="ddate">Sunday · 5 July</div>
+          <div class="dtitle">Drive to Venice → Home</div>
+          <div class="dsub">Leave 9:00 AM · Drop AVIS 12:30 PM · Fly 2:40 PM</div>
+        </div>
+        <div><div class="dtags"><span class="tag t-travel">Travel</span></div><div class="chev">›</div></div>
+      </div>
+      <div class="dbody">
+        <div class="dcols">
+          <div>
+            <div class="dlabel">Morning</div>
+            <ul class="alist">
+              <li>Hotel breakfast · Sunday is quiet in the city centre — good for a final short walk</li>
+              <li class="car">Check out · leave no later than 9:00 AM</li>
+              <li class="car">Drive Ljubljana → Venice Marco Polo · ~2.5 hrs · ~205 km via A2/A23 and Karavanke Tunnel</li>
+              <li class="car">Return rental car at VCE · allow time — aim to arrive 2.5 hrs before departure</li>
+            </ul>
+            <div class="iblock" style="margin-top:12px">
+              <div class="irow"><span class="il">Leave Ljubljana</span><span class="iv" style="color:var(--blue)">No later than 9:00 AM</span></div>
+              <div class="irow"><span class="il">Drive</span><span class="iv">~2.5 hrs</span></div>
+              <div class="irow"><span class="il">AVIS return</span><span class="iv">Marco Polo · by 12:00 PM</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="dlabel">Flights home</div>
+            <ul class="alist">
+              <li class="fly">LH 327 · VCE → FRA · 2:40 PM</li>
+              <li class="fly">Arrives Frankfurt 4:10 PM · 1hr 20min layover</li>
+              <li class="fly">UA 927 · FRA → SFO · departs 5:30 PM</li>
+              <li class="fly">Arrives SFO 7:50 PM PDT</li>
+            </ul>
+          </div>
+        </div>
+        <div class="nbox">⏰ Sunday Karavanke Tunnel traffic can back up — leave Ljubljana by 9:00 AM at the latest if your flight is mid-afternoon.</div>
       </div>
     </div>
 
   </section>
 
-  <section id="bookings" class="bookings-section">
-    <div class="section-header">
-      <h2 class="section-title">To Book</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="bookings-grid">
-      <div class="booking-card">
-        <div class="booking-num">1</div>
+  <!-- BOOKINGS -->
+  <section id="bookings" class="section">
+    <div class="sh"><h2>To Book</h2><div class="sh-line"></div></div>
+    <div class="bgrid">
+      <div class="bcard">
+        <div class="bnum">1</div>
         <div>
-          <div class="booking-title">Vintgar Gorge — Timed Entry</div>
-          <div class="booking-detail">Most urgent. Fills weeks ahead in July. Do this today.</div>
-          <a class="booking-link" href="https://www.bled.si/en/attractions/vintgar-gorge" target="_blank">bled.si/en/vintgar ↗</a>
+          <div class="btitle">Vintgar Gorge — Timed Entry</div>
+          <div class="bdetail">Most urgent. Fills weeks ahead in July. Do this today.</div>
+          <a class="blink" href="https://www.bled.si/en/attractions/vintgar-gorge" target="_blank">bled.si/en/vintgar ↗</a>
         </div>
       </div>
-      <div class="booking-card">
-        <div class="booking-num">2</div>
+      <div class="bcard">
+        <div class="bnum">2</div>
         <div>
-          <div class="booking-title">Pletna Boat — Lake Bled</div>
-          <div class="booking-detail">Pre-arrange through Adora Luxury Hotel. ~€18pp return. Fixed guild price.</div>
+          <div class="btitle">Pletna Boat — Lake Bled</div>
+          <div class="bdetail">Arrange via Adora before arrival. Private hire fills up. ~€18pp return.</div>
         </div>
       </div>
-      <div class="booking-card">
-        <div class="booking-num">3</div>
+      <div class="bcard">
+        <div class="bnum">3</div>
         <div>
-          <div class="booking-title">Soča Rafting — Wed Jul 1</div>
-          <div class="booking-detail">Half-day from Bovec. Fills up in July — book well ahead.</div>
-          <a class="booking-link" href="https://sportmix.si/en/rafting/" target="_blank">sportmix.si ↗</a>
+          <div class="btitle">Adora Spa — Book Ahead</div>
+          <div class="bdetail">Email Adora directly to reserve a session during the Bled stay.</div>
         </div>
       </div>
-      <div class="booking-card done">
-        <div class="booking-num done">✓</div>
+      <div class="bcard">
+        <div class="bnum">4</div>
         <div>
-          <div class="booking-title" style="color:var(--green)">Predjama Castle ✅</div>
-          <div class="booking-detail">Tickets booked · 10:00 AM entry confirmed · Sat Jul 4</div>
+          <div class="btitle">Strelec Restaurant — Ljubljana</div>
+          <div class="bdetail">Inside Ljubljana Castle. Exceptional views. Book ahead for dinner Thu or Fri.</div>
         </div>
       </div>
-      <div class="booking-card">
-        <div class="booking-num">5</div>
+      <div class="bcard">
+        <div class="bnum">5</div>
         <div>
-          <div class="booking-title">Dinner — Fri Jul 3, Ljubljana</div>
-          <div class="booking-detail">Ask InterContinental concierge to recommend and reserve. Good restaurants fill up in summer.</div>
+          <div class="btitle">Ostarija Peglez'n — Bled</div>
+          <div class="bdetail">Best grilled meats in Bled. Popular — book ahead for dinner Tue evening.</div>
         </div>
       </div>
-      <div class="booking-card">
-        <div class="booking-num">6</div>
+      <div class="bcard">
+        <div class="bnum">6</div>
         <div>
-          <div class="booking-title">Gostilna Pri Martinu — Jun 28</div>
-          <div class="booking-detail">Sunday dinner in Kranjska Gora on arrival. Small restaurant — book ahead.</div>
+          <div class="btitle">Gostilna Pri Martinu — Jun 28</div>
+          <div class="bdetail">Arrival dinner in Kranjska Gora. Small restaurant — call ahead.</div>
         </div>
       </div>
-      <div class="booking-card done">
-        <div class="booking-num done">✓</div>
+      <div class="bcard">
+        <div class="bnum">7</div>
         <div>
-          <div class="booking-title" style="color:var(--green)">Bled Castle ✅</div>
-          <div class="booking-detail">Tickets booked · Mon Jun 29</div>
+          <div class="btitle">Vogel Cable Car — Bohinj</div>
+          <div class="bdetail">Check July operating schedule. Walk-up usually fine but peak season.</div>
         </div>
       </div>
-      <div class="booking-card done">
-        <div class="booking-num done">✓</div>
+      <div class="bcard">
+        <div class="bnum">8</div>
         <div>
-          <div class="booking-title" style="color:var(--green)">JAZ by Ana Roš ✅</div>
-          <div class="booking-detail">Sat Jul 4 · 6:00 PM · Čopova ulica 5a, Ljubljana · Confirmed</div>
+          <div class="btitle">Ljubljana Food Tour — Fri 3 Jul</div>
+          <div class="bdetail">Morning or afternoon, 3 hrs, 7–8 stops from the market area. Book ahead.</div>
         </div>
       </div>
-      <div class="booking-card done">
-        <div class="booking-num done">✓</div>
-        <div>
-          <div class="booking-title" style="color:var(--green)">All 3 Hotels ✅</div>
-          <div class="booking-detail">Milka (Jun 28) · Adora (Jun 29–Jul 2) · InterContinental (Jul 2–5) · All confirmed</div>
-        </div>
+      <!-- CONFIRMED -->
+      <div class="bcard done">
+        <div class="bnum done">✓</div>
+        <div><div class="btitle done">JAZ by Ana Roš ✅</div><div class="bdetail">Sat 4 Jul · 6:00 PM · Čopova ulica 5a · Confirmed</div></div>
+      </div>
+      <div class="bcard done">
+        <div class="bnum done">✓</div>
+        <div><div class="btitle done">Bled Castle ✅</div><div class="bdetail">Tickets booked · Tue 30 Jun</div></div>
+      </div>
+      <div class="bcard done">
+        <div class="bnum done">✓</div>
+        <div><div class="btitle done">Predjama Castle ✅</div><div class="bdetail">Tickets booked · 10:00 AM · Sat 4 Jul</div></div>
+      </div>
+      <div class="bcard done">
+        <div class="bnum done">✓</div>
+        <div><div class="btitle done">All 3 Hotels ✅</div><div class="bdetail">Milka · Adora · InterContinental — all confirmed</div></div>
       </div>
     </div>
   </section>
 
-  <section id="tips" class="tips-section">
-    <div class="section-header">
-      <h2 class="section-title">Tips</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="tips-grid">
-      <div class="tip-card"><div class="tip-icon">🚗</div><div class="tip-title">Car Rental</div><div class="tip-text">AVIS picked up and dropped at Marco Polo. Confirm Slovenia cross-border coverage is explicitly stated. Buy the Slovenian motorway vignette (~€15/week) at the border or first petrol station. Download offline Google Maps for Slovenia before you go.</div></div>
-      <div class="tip-card"><div class="tip-icon">🌡️</div><div class="tip-title">Weather in July</div><div class="tip-text">25–32°C in Ljubljana and Bled. Mountains 18–24°C. Afternoon thunderstorms common in the Julian Alps — check forecast before heading out. Bring a light jacket for mountain evenings. Sun protection essential on the water.</div></div>
-      <div class="tip-card"><div class="tip-icon">🏔️</div><div class="tip-title">Lake Bled Practicalities</div><div class="tip-text">Park at Mlino village (southern shore) for Mala Osojnica — better than the main car park. Lake water is 20–22°C all summer. Bled cream cake (kremna rezina) at Smon Confectionery is worth stopping for. Hit Vintgar at 8 AM — it gets very busy by 10 AM.</div></div>
-      <div class="tip-card"><div class="tip-icon">🏰</div><div class="tip-title">Predjama Castle</div><div class="tip-text">Arrive at 10 AM exactly — you'll get in before tour groups. The audio tour is excellent; don't skip it. There's a small cave system accessible from the courtyard. Allow 1.5 hours. Leave Ljubljana by 9:00 AM sharp.</div></div>
-      <div class="tip-card"><div class="tip-icon">🍷</div><div class="tip-title">Food & Wine</div><div class="tip-text">Slovenia produces world-class wine that's almost never exported. Try Rebula and Malvazija whites. Try Teran red from the Kras plateau. JAZ on Saturday is the centrepiece. The Milka breakfast Monday morning is not to be missed — set your alarm.</div></div>
-      <div class="tip-card"><div class="tip-icon">🏛️</div><div class="tip-title">Ljubljana Tips</div><div class="tip-text">Entirely walkable from the InterContinental. Pogačar market open Tue–Sat until ~6 PM. The Plečnikove tržnice covered market hall is an architectural gem worth exploring. Metelkova arts district — former Yugoslav military barracks — is worth an evening wander.</div></div>
-      <div class="tip-card"><div class="tip-icon">💶</div><div class="tip-title">Money</div><div class="tip-text">Both Slovenia and Italy use the Euro. Cards accepted almost everywhere. Keep some cash for Pogačar market, pletna boats (~€18pp), and small entry fees like Predjama. ATMs widely available in Ljubljana and Bled.</div></div>
-      <div class="tip-card"><div class="tip-icon">🎒</div><div class="tip-title">What to Pack</div><div class="tip-text">Good walking shoes for Mala Osojnica and Vintgar Gorge. Swimwear — Lake Bled, Lake Bohinj. Light jacket for mountain evenings. Old clothes for rafting day — wetsuits are provided but you'll get wet before putting them on. Small day pack for hike days.</div></div>
+  <!-- TIPS -->
+  <section id="tips" class="section">
+    <div class="sh"><h2>Tips</h2><div class="sh-line"></div></div>
+    <div class="tgrid">
+      <div class="tcard">
+        <div class="ticon">🚗</div>
+        <div class="ttitle">Car &amp; Driving</div>
+        <div class="ttext">Karavanke Tunnel toll ~€12 northbound — keep card or cash handy. Confirm the rental includes a Slovenian motorway vignette. Ljubljana is traffic-free in the centre — park at the InterContinental (valet recommended) and walk everywhere. Download offline Slovenia maps before departure.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">💶</div>
+        <div class="ttitle">Money</div>
+        <div class="ttext">Slovenia uses the Euro. Cards accepted almost everywhere except very small stalls. ATMs available in Bled and Ljubljana; Kranjska Gora has one in the centre. Amex Platinum's travel protections cover Slovenia — use it as your primary card.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🌡️</div>
+        <div class="ttitle">Weather in Late June / July</div>
+        <div class="ttext">Highs of 26–32°C in Ljubljana. Cooler in the mountains at 18–24°C. Afternoon thunderstorms are common in July — pack a light waterproof. Lake temperatures are excellent for swimming by late June (~21°C). Bring sunscreen for the water.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🏔️</div>
+        <div class="ttitle">Lake Bled Practicalities</div>
+        <div class="ttext">Park at Mlino village (southern shore) for Mala Osojnica — better than the main car park. Hit Vintgar Gorge at 8 AM before the crowds. Kremna rezina (Bled cream cake) at Park Restaurant on the lakefront — a local institution, don't leave without one.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🏰</div>
+        <div class="ttitle">Predjama Castle</div>
+        <div class="ttext">Arrive exactly at 10 AM to get in before tour groups. The audio tour is genuinely good — don't skip it. The cave system accessible from the courtyard is worth exploring. Leave Ljubljana by 9:00 AM for comfortable timing before the JAZ dinner.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🍷</div>
+        <div class="ttitle">Food &amp; Wine</div>
+        <div class="ttext">Try Rebula and Malvazija whites from the Goriška Brda region. Teran red from the Kras plateau. Kremna rezina — Bled's vanilla cream slice. Potica — traditional rolled nut cake. Kranjska klobasa — Carniolan sausage, best with mustard. Laško and Union are the local lagers.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🏛️</div>
+        <div class="ttitle">Ljubljana Tips</div>
+        <div class="ttext">Entirely walkable from the InterContinental — 10 min on foot to everything. BicikeLJ city bikes: stations throughout the centre, first hour free. Metelkova arts district (former Yugoslav military barracks) is worth an evening wander. Robba Fountain and St Nicholas Cathedral are on the same short walk.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">📸</div>
+        <div class="ttitle">Photo Shoot — Fri 3 Jul</div>
+        <div class="ttext">Sunset in Ljubljana on 3 July is ~8:45 PM. The golden hour light on the Triple Bridge, the Ljubljanica riverfront and the castle hill alleyways is exceptional. Best backdrops: Triple Bridge, the riverfront promenade, and the narrow streets between the market and the castle. Allow 1.5–2 hours.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🗣️</div>
+        <div class="ttitle">Language</div>
+        <div class="ttext">Slovenian is the official language. English is widely spoken in hotels and tourist areas. A few phrases go a long way: Prosim (please), Hvala (thank you), Dober dan (good day). Menus will almost always have English.</div>
+      </div>
+      <div class="tcard">
+        <div class="ticon">🎒</div>
+        <div class="ttitle">What to Pack</div>
+        <div class="ttext">Good walking shoes for Mala Osojnica and Vintgar Gorge. Swimwear — Lake Bled and Lake Bohinj. Light waterproof jacket for afternoon mountain storms. EU power adapter (type C/F). Sunscreen — essential on the water. Something nice for the JAZ dinner and the photo shoot.</div>
+      </div>
     </div>
   </section>
 
 </div>
 
 <footer>
-  <div>Cameron & Michelle &nbsp;·&nbsp; <span>Slovenia</span> &nbsp;·&nbsp; Jun 28 – Jul 5, 2026</div>
+  <div>Cameron &amp; Michelle &nbsp;·&nbsp; <span>Slovenia</span> &nbsp;·&nbsp; 28 June – 5 July 2026</div>
   <div style="margin-top:8px">Have a <span>wonderful</span> trip ✦</div>
 </footer>
 
 <script>
-  function toggleDay(header) {
+  function toggle(header) {
     const body = header.nextElementSibling;
-    const chevron = header.querySelector('.chevron');
-    const isOpen = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    chevron.style.transform = isOpen ? '' : 'rotate(90deg)';
+    const chev = header.querySelector('.chev');
+    const open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    chev.style.transform = open ? '' : 'rotate(90deg)';
   }
-  document.querySelector('.day-header').click();
+  document.querySelector('.dhead').click();
   const sections = document.querySelectorAll('section[id]');
-  const navItems = document.querySelectorAll('.nav-item');
+  const navLinks = document.querySelectorAll('.nav-item');
   window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
-    navItems.forEach(n => { n.classList.toggle('active', n.getAttribute('href') === '#' + current); });
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
   });
 </script>
 </body>
